@@ -50,4 +50,30 @@ class DishController:
         matched_dishes = [dish for dish in self.dishes if pattern.search(dish.name) or pattern.search(dish.description)]
         return matched_dishes
 
+
+    def get_all_dishes(self):
+        """
+        获取所有菜品
+        返回:
+            所有菜品对象列表 List[Dish]
+        """
+        return self.dishes
+    
+    def get_all_dish_names(self):
+        """
+        获取所有菜品名称
+        返回:
+            所有菜品名称列表 List[str]
+        """
+        return [dish.name for dish in self.dishes]
+    
+    def remove_dish(self, name: str):
+        """
+        根据菜名删除菜品
+        参数:
+            name 菜名 str
+        无返回
+        """
+        self.dishes = [dish for dish in self.dishes if dish.name != name]
+        save_dishes_to_json(dish_path, self.dishes)
     
