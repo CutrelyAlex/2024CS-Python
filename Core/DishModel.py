@@ -2,7 +2,9 @@ import json
 
 class Dish:
     '''菜品模型'''
-    def __init__(self, name: str, price: float, category: str, image_url: str, calories: float, allergens: list, description: str):
+    def __init__(self, location: str, name: str, price: float, category: str, image_url: str, calories: float, \
+                 allergens: list, description: str):
+        self.location = location
         self.name = name
         self.price = price
         self.category = category
@@ -11,8 +13,12 @@ class Dish:
         self.allergens = allergens
         self.description = description
 
+    '''Debug模式下显示菜品信息'''
     def display_info(self):
-        return f"菜品名称: {self.name}\n价格: {self.price}元\n分类: {self.category}\n热量: {self.calories}卡\n过敏源: {', '.join(self.allergens)}\n描述: {self.description}"
+        return f"菜品名称: {self.name}\n价格: {self.price}元\n分类: {self.category}\n热量: {self.calories} \
+    \n过敏源: {', '.join(self.allergens)}\n描述: {self.description} \
+    位置:{self.location}
+    "
 
 
 
@@ -41,6 +47,7 @@ def convert_to_dishes(dishes_data):
     dishes = []
     for data in dishes_data:
         dish = Dish(
+            location=data["location"],
             name=data['name'],
             price=data['price'],
             category=data['category'],
