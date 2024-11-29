@@ -35,6 +35,8 @@ class Dish:
             raise ValueError("菜品价格不能为负数")
         if self.calories < 0:
             raise ValueError("菜品热量不能为负数")
+        if not isinstance(self.allergens, list):
+            raise ValueError("过敏源应为列表")
 
 
     def __str__(self) -> str:
@@ -79,7 +81,7 @@ def convert_to_dishes(dishes_data: List[Dict[str, Any]]) -> List[Dish]:
             if not isinstance(data, dict):
                 raise ValueError("每个菜品数据应为字典")
             dish = Dish(
-                location=data["location"],
+                location=data.get("location", "Unknown"),
                 name=data['name'],
                 price=data['price'],
                 category=data['category'],

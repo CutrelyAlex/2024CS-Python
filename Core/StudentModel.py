@@ -2,36 +2,24 @@ import json
 from typing import List, Dict, Any
 from datetime import datetime
 
-from DishController import *
-from DishModel import Dish
+from Core.DishController import *
+from Core.DishModel import Dish
 
 class DiningInfo:
     '''就餐信息类'''
-    def __init__(self, dining_time: datetime, dishes: List[str], remarks: str):
+    def __init__(self, dining_time: datetime, dishes: List[str], remarks: str, location: str = "Unknown"):
         '''
         初始化 DiningInfo 对象
         参数:
             dining_time: 就餐时间 datetime
             dishes: 对应菜品名称列表 List[str]
             remarks: 备注 str
+            location: 就餐位置 str (默认 "Unknown")
         '''
         self.dining_time = dining_time
         self.dishes = dishes
         self.remarks = remarks
-        self.total_price = self.calculate_total_price()
-        self.location = self.calculate_location()
-
-    def calculate_total_price(self) -> float:
-        '''计算总价格'''
-        # Assuming a function get_dish_price(name: str) -> float exists in DishController
-        return sum(get_dish_price(dish) for dish in self.dishes)
-
-    def calculate_location(self) -> str:
-        '''返回就餐位置'''
-        # Assuming a function get_dish_location(name: str) -> str exists in DishController
-        if self.dishes:
-            return get_dish_location(self.dishes[0])
-        return ""
+        self.location = location
 
 class PersonalProfile:
     '''个人简介类'''
@@ -55,7 +43,9 @@ class Student:
         参数:
             student_id: 学号 str
             name: 姓名 str
-            password: 密码 str
+            password: 密
+                
+            码 str
             profile: 个人简介 PersonalProfile
             dining_info_list: 就餐信息列表 List[DiningInfo]
         '''
@@ -126,7 +116,8 @@ def convert_to_students(students_data: List[Dict[str, Any]]) -> List[Student]:
                 dining_info = DiningInfo(
                     dining_time=datetime.fromisoformat(dining_data['dining_time']),
                     dishes=dining_data['dishes'],
-                    remarks=dining_data['remarks']
+                    remarks=dining_data['remarks'],
+                    location=dining_data.get('location', "Unknown") 
                 )
                 dining_info_list.append(dining_info)
             student = Student(
@@ -152,14 +143,14 @@ def save_students_to_json(file_path: str, students: List[Student]) -> None:
     try:
         students_data = [student.__dict__ for student in students]  # 将学生对象转换为字典
         for student_data in students_data:
-            student_data['profile'] = student_data['profile'].__dict__
+            if hasattr(student_data['profile'], '__dict__'):
+                student_data['profile'] = student_data['profile'].__dict__
             student_data['dining_info_list'] = [
                 {
                     'dining_time': dining_info.dining_time.isoformat(),
                     'dishes': dining_info.dishes,
                     'remarks': dining_info.remarks,
-                    'total_price': dining_info.total_price,
-                    'location': dining_info.location
+                    'location': dining_info.location  
                 } for dining_info in student_data['dining_info_list']
             ]
         with open(file_path, 'w', encoding='utf-8') as file:

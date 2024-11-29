@@ -7,14 +7,15 @@ DishController 模块
 - find_dish(query): 根据菜名或描述模糊查询菜品
 - get_all_dishes(): 获取所有菜品
 - get_all_dish_names(): 获取所有菜品名称
-- remove_dish(name): 根据菜名删除菜品
+- remove_dish(name, location): 根据菜名和位置删除菜品
 - find_dish_by_location(location): 根据位置查询菜品
 - update_dish(location, name, price=None, category=None, image_url=None, calories=None, allergens=None, description=None): 修改菜品信息
 - update_dish_location(name, old_location, new_location): 修改菜品位置
+- get_dish_price(name, location): 根据菜名和位置获取菜品价格
 """
 
 import re
-from DishModel import *
+from Core.DishModel import Dish, convert_to_dishes, load_dishes_from_json, save_dishes_to_json
 dish_path = "dishes.json"
 
 class DishController:
@@ -85,14 +86,15 @@ class DishController:
         """
         return [dish.name for dish in self.dishes]
     
-    def remove_dish(self, name: str):
+    def remove_dish(self, name: str, location: str):
         """
-        根据菜名删除菜品
+        根据菜名和位置删除菜品
         参数:
             name 菜名 str
+            location 位置 str
         无返回
         """
-        self.dishes = [dish for dish in self.dishes if dish.name != name]
+        self.dishes = [dish for dish in self.dishes if not (dish.name == name and dish.location == location)]
         save_dishes_to_json(dish_path, self.dishes)
     
     def find_dish_by_location(self, location: str):
@@ -144,6 +146,21 @@ class DishController:
                 save_dishes_to_json(dish_path, self.dishes)
                 return
         raise ValueError("未找到指定的菜品")
+
+    def get_dish_price(self, name: str, location: str) -> float:
+        """
+        根据菜名和位置获取菜品价格
+        参数:
+            name 菜名 str
+            location 位置 str
+        返回:
+            菜品价格 float
+        """
+        for dish in self.dishes:
+            if dish.name == name and dish.location == location:
+                return dish.price
+        raise ValueError("未找到指定的菜品")
+
 
     def _update_dish_attributes(self, dish: Dish, price: float = None, \
                                 category: str = None, image_url: str = None, calories: float = None, \

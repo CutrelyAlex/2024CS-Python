@@ -1,0 +1,21 @@
+[
+    {
+        "student_id": "202400301051",
+        "name": "陈烨烨",
+        "password": "password123",
+        "profile": {
+            "age": 19,
+            "gender": "Male",
+            "description": "我是一个学生."
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2023-10-01T12:30:00",
+                "dishes": [
+                    "测试菜"
+                ],
+                "remarks": "我累个"
+            }
+        ]
+    }
+]
