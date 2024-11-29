@@ -8,7 +8,8 @@ DishController 模块
 - get_all_dishes(): 获取所有菜品
 - get_all_dish_names(): 获取所有菜品名称
 - remove_dish(name, location): 根据菜名和位置删除菜品
-- find_dish_by_location(location): 根据位置查询菜品
+- find_dish_by_location(location, name): 根据位置和名称查询菜品
+- get_all_dishes_by_location(location): 获取所有某个位置的菜品
 - update_dish(location, name, price=None, category=None, image_url=None, calories=None, allergens=None, description=None): 修改菜品信息
 - update_dish_location(name, old_location, new_location): 修改菜品位置
 - get_dish_price(name, location): 根据菜名和位置获取菜品价格
@@ -115,15 +116,29 @@ class DishController:
         self.dishes = [dish for dish in self.dishes if not (dish.name == name and dish.location == location)]
         save_dishes_to_json(dish_path, self.dishes)
     
-    def find_dish_by_location(self, location: str):
+    def find_dish_by_location(self, location: str, name: str):
         """
-        根据位置查询菜品。
+        根据位置和名称查询菜品。
+
+        参数:
+            location (str): 位置
+            name (str): 菜名
+
+        返回:
+            List[Dish]: 匹配的菜品对象列表
+        """
+        matched_dishes = [dish for dish in self.dishes if dish.location == location and dish.name == name]
+        return matched_dishes
+
+    def get_all_dishes_by_location(self, location: str):
+        """
+        获取所有某个位置的菜品。
 
         参数:
             location (str): 位置
 
         返回:
-            List[Dish]: 匹配的菜品对象列表
+            List[Dish]: 所有匹配的菜品对象列表
         """
         matched_dishes = [dish for dish in self.dishes if dish.location == location]
         return matched_dishes
@@ -141,7 +156,7 @@ class DishController:
             category (str, optional): 类型
             image_url (str, optional): 图片路径
             calories (float, optional): 热量
-            allergens (list, optional): 过敏��
+            allergens (list, optional): 过敏原
             description (str, optional): 描述
 
         返回:
