@@ -58,8 +58,10 @@ def load_dishes_from_json(file_path: str) -> List[Dict[str, Any]]:
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             dishes_data = json.load(file)
+            if not isinstance(dishes_data, list):
+                raise ValueError("JSON 文件内容应为列表")
             return dishes_data
-    except (FileNotFoundError, json.JSONDecodeError) as e:
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
         print(f"加载 JSON 文件时出错: {e}")
         return []
 
@@ -74,6 +76,8 @@ def convert_to_dishes(dishes_data: List[Dict[str, Any]]) -> List[Dish]:
     dishes = []
     for data in dishes_data:
         try:
+            if not isinstance(data, dict):
+                raise ValueError("每个菜品数据应为字典")
             dish = Dish(
                 location=data["location"],
                 name=data['name'],
@@ -85,8 +89,8 @@ def convert_to_dishes(dishes_data: List[Dict[str, Any]]) -> List[Dish]:
                 description=data['description']
             )
             dishes.append(dish)
-        except KeyError as e:
-            print(f"数据中缺少键: {e}")
+        except (KeyError, ValueError) as e:
+            print(f"数据转换时出错: {e}")
     return dishes
 
 def save_dishes_to_json(file_path: str, dishes: List[Dish]) -> None:
@@ -97,9 +101,9 @@ def save_dishes_to_json(file_path: str, dishes: List[Dish]) -> None:
         dishes 菜品列表 List[Dish]
     无返回
     """
-    dishes_data = [dish.__dict__ for dish in dishes]  # 将菜品对象转换为字典
     try:
+        dishes_data = [dish.__dict__ for dish in dishes]  # 将菜品对象转换为字典
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(dishes_data, file, ensure_ascii=False, indent=4)  # 保存为 JSON 格式
-    except IOError as e:
+    except (IOError, TypeError) as e:
         print(f"保存 JSON 文件时出错: {e}")
