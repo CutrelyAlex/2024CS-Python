@@ -58,11 +58,11 @@ class Student:
     def validate(self):
         '''验证学生数据的有效性'''
         if not self.student_id:
-            raise ValueError("学号不能为空")
+            return None
         if not self.name:
-            raise ValueError("姓名不能为空")
+            return None
         if not self.password:
-            raise ValueError("密码不能为空")
+            return None
 
     def __str__(self) -> str:
         '''返回学生的字符串表示'''

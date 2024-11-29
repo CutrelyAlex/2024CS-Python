@@ -30,43 +30,49 @@ class DiningInfo:
         self.location = location
 
 class StudentController:
+    """
+    管理学生的控制器类。
+
+    方法可能返回 `None`，例如在添加已存在的学生或未找到特定学生时。
+    """
     def __init__(self):
         self.students = convert_to_students(load_students_from_json(student_path))
     
     def add_student(self, student: Student):
         """
-        添加学生
+        添加学生。
 
         参数:
             student (Student): 要添加的学生对象
 
-        无返回
+        返回:
+            None 如果学生已存在
         """
-        # ...existing code...
         for existing_student in self.students:
             if existing_student.student_id == student.student_id:
-                raise ValueError("学生已存在")
+                return None
         self.students.append(student)
         save_students_to_json(student_path, self.students)
     
     def find_student_by_id(self, student_id: str) -> Student:
         """
-        根据学号查找学生
+        根据学号查找学生。
 
         参数:
             student_id (str): 学生的学号
 
         返回:
             Student: 找到的学生对象
+            None 如果未找到
         """
         for student in self.students:
             if student.student_id == student_id:
                 return student
-        raise ValueError("未找到指定的学生")
+        return None
     
     def find_student_by_name(self, name: str) -> List[Student]:
         """
-        根据姓名查找学生
+        根据姓名查找学生。
 
         参数:
             name (str): 学生的姓名
@@ -80,7 +86,7 @@ class StudentController:
     
     def get_all_students(self) -> List[Student]:
         """
-        获取所有学生
+        获取所有学生。
 
         返回:
             List[Student]: 所有学生列表
@@ -89,25 +95,27 @@ class StudentController:
     
     def remove_student(self, student_id: str):
         """
-        根据学号删除学生
+        根据学号删除学生。
 
         参数:
             student_id (str): 要删除学生的学号
 
-        无返回
+        返回:
+            None
         """
         self.students = [student for student in self.students if student.student_id != student_id]
         save_students_to_json(student_path, self.students)
     
     def update_student(self, student_id: str, **kwargs):
         """
-        更新学生信息
+        更新学生信息。
 
         参数:
             student_id (str): 学生的学号
             **kwargs: 需要更新的字段及其新值
 
-        无返回
+        返回:
+            None 如果学生未找到
         """
         for student in self.students:
             if student.student_id == student_id:
@@ -121,34 +129,36 @@ class StudentController:
                     student.dining_info_list = kwargs['dining_info_list']
                 save_students_to_json(student_path, self.students)
                 return
-        raise ValueError("未找到指定的学生")
+        return None
 
     def add_dining_record(self, student_id: str, dining_info: DiningInfo):
         """
-        添加餐饮记录
+        添加餐饮记录。
 
         参数:
             student_id (str): 学生的学号
             dining_info (DiningInfo): 要添加的餐饮记录对象
 
-        无返回
+        返回:
+            None 如果学生未找到
         """
         for student in self.students:
             if student.student_id == student_id:
                 student.dining_info_list.append(dining_info)
                 save_students_to_json(student_path, self.students)
                 return
-        raise ValueError("未找到指定的学生")
+        return None
 
     def remove_dining_record(self, student_id: str, record_id: str):
         """
-        删除餐饮记录
+        删除餐饮记录。
 
         参数:
             student_id (str): 学生的学号
             record_id (str): 餐饮记录的ID
 
-        无返回
+        返回:
+            None 如果记录未找到
         """
         for student in self.students:
             if student.student_id == student_id:
@@ -160,12 +170,12 @@ class StudentController:
                     save_students_to_json(student_path, self.students)
                     return
                 else:
-                    raise ValueError("未找到指定的餐饮记录")
-        raise ValueError("未找到指定的学生")
+                    return None
+        return None
 
     def find_dining_record(self, student_id: str, record_id: str) -> DiningInfo:
         """
-        查找餐饮记录
+        查找餐饮记录。
 
         参数:
             student_id (str): 学生的学号
@@ -173,24 +183,26 @@ class StudentController:
 
         返回:
             DiningInfo: 找到的餐饮记录对象
+            None 如果未找到
         """
         for student in self.students:
             if student.student_id == student_id:
                 for record in student.dining_info_list:
                     if record.id == record_id:
                         return record
-        raise ValueError("未找到指定的餐饮记录")
+        return None
 
     def update_dining_record(self, student_id: str, record_id: str, **kwargs):
         """
-        更新餐饮记录
+        更新餐饮记录。
 
         参数:
             student_id (str): 学生的学号
             record_id (str): 餐饮记录的ID
             **kwargs: 需要更新的字段及其新值
 
-        无返回
+        返回:
+            None 如果记录未找到
         """
         for student in self.students:
             if student.student_id == student_id:
@@ -206,4 +218,4 @@ class StudentController:
                             record.location = kwargs['location']
                         save_students_to_json(student_path, self.students)
                         return
-        raise ValueError("未找到指定的餐饮记录")
+        return None
