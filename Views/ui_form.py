@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1079, 777)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setMinimumSize(QSize(23, 21))
@@ -31,7 +31,7 @@ class Ui_MainWindow(object):
         self.verticalLayoutWidget.setGeometry(QRect(20, 70, 301, 451))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setContentsMargins(11, 0, 0, 0)
         self.label_2 = QLabel(self.verticalLayoutWidget)
         self.label_2.setObjectName(u"label_2")
         font = QFont()
@@ -70,23 +70,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.label)
 
-        self.verticalLayoutWidget_2 = QWidget(self.centralwidget)
-        self.verticalLayoutWidget_2.setObjectName(u"verticalLayoutWidget_2")
-        self.verticalLayoutWidget_2.setGeometry(QRect(170, 0, 440, 61))
-        self.verticalLayout_2 = QVBoxLayout(self.verticalLayoutWidget_2)
-        self.verticalLayout_2.setSpacing(8)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(3, 3, 5, 8)
-        self.label_7 = QLabel(self.verticalLayoutWidget_2)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setFont(font)
-
-        self.verticalLayout_2.addWidget(self.label_7)
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 800, 25))
+        self.menubar.setGeometry(QRect(0, 0, 1079, 25))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -105,6 +92,5 @@ class Ui_MainWindow(object):
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u610f\u89c1\u4e0e\u5efa\u8bae", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u5206\u4eab", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u5173\u4e8e", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u6df1\u5733\u6280\u672f\u5927\u5b66\u5b66\u751f\u5c31\u9910\u60c5\u51b5\u7ba1\u7406\u7cfb\u7edf", None))
     # retranslateUi
 
