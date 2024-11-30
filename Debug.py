@@ -1,8 +1,6 @@
-import datetime  # 新增导入
+import datetime
 from Core.DishController import DishController
 from Core.StudentController import StudentController, DiningInfo
-from Core.DishModel import Dish
-from Core.StudentModel import Student
 
 dish_controller = DishController()
 student_controller = StudentController()

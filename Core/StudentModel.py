@@ -2,7 +2,6 @@ import json
 from typing import List, Dict, Any
 from datetime import datetime
 
-from Core.DishController import *
 from Core.DishModel import Dish
 
 class DiningInfo:

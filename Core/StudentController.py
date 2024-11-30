@@ -17,7 +17,7 @@ StudentController 模块
 import re
 from typing import List
 from Core.StudentModel import Student, convert_to_students, load_students_from_json, save_students_to_json, DiningInfo
-from Core.DishModel import *
+from Core.DishModel import Dish
 
 student_path = "students.json"
 
