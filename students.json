@@ -12,7 +12,8 @@
             {
                 "dining_time": "2023-10-01T12:30:00",
                 "dishes": [
-                    "炒饭"
+                    "炒饭",
+                    "测试菜"
                 ],
                 "remarks": "我累个",
                 "location": "Unknown"

@@ -24,5 +24,17 @@
             "鸡蛋"
         ],
         "description": "美味的炒饭"
+    },
+    {
+        "location": "南区食堂",
+        "name": "测试B",
+        "price": 18.0,
+        "category": "主食",
+        "image_url": "",
+        "calories": 500,
+        "allergens": [
+            "鸡蛋"
+        ],
+        "description": "美味的炒饭"
     }
 ]
