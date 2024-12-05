@@ -17,8 +17,7 @@ class Dish:
     def display_info(self):
         return f"菜品名称: {self.name}\n价格: {self.price}元\n分类: {self.category}\n热量: {self.calories} \
     \n过敏源: {', '.join(self.allergens)}\n描述: {self.description} \
-    位置:{self.location}
-    "
+    位置:{self.location}"
 
 
 

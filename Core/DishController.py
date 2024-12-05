@@ -1,14 +1,14 @@
 import re
 from Core.DishModel import *
-dish_path = "dishes.json"
+dish_path = "..\Core\dishes.json"
 
 class DishController:
     dishes = convert_to_dishes(load_dishes_from_json(dish_path))
     def __init__(self):
         pass
     
-    def add_dish(self, location: str, name: str, price: float, \
-                 category: str, image_url: str, calories: float, \
+    def add_dish(self, location: str, name: str, price: float,
+                 category: str, image_url: str, calories: float,
                  allergens: list, description: str):
         """
         添加菜品接口
@@ -88,3 +88,4 @@ class DishController:
         """
         matched_dishes = [dish for dish in self.dishes if dish.location == location]
         return matched_dishes
+
