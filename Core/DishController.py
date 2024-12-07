@@ -1,6 +1,6 @@
 import re
 from Core.DishModel import *
-dish_path = "..\Core\dishes.json"
+dish_path = "dishes.json"
 
 class DishController:
     dishes = convert_to_dishes(load_dishes_from_json(dish_path))

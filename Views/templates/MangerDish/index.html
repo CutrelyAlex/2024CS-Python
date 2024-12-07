@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="m-0">
+                            餐饮详情
+                            <small>列表</small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 search-collapse">
+                    <form id="search_form" method="post">
+                        {{ form.csrf_token }}
+                        <div class="form-group row">
+                            <label for="inputtext" class="col-form-label">菜品名称：</label>
+                            <div class="col-md-4">
+                                <input type="text" id="search_name" name="name" class="form-control" placeholder="请输入菜的名称"/>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-info"><i class="fa fa-plus"></i>查询</button>
+                                <a class="btn btn-primary single" href="{{ url_for('dish_add' ) }}">
+                                    <i class="fa fa-plus"></i> 新增
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="col-sm-12 main">
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>位置</th>
+                        <th>菜名</th>
+                        <th>价格</th>
+                        <th>热量</th>
+                        <th>材料</th>
+                        <th>图片</th>
+                        <th>功能操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for dish in dishes %}
+                        <tr>
+                            <td>{{ dish.location }}</td>
+                            <td>{{ dish.name }}</td>
+                            <td>{{ dish.price }}</td>
+                            <td>{{ dish.calories }}</td>
+                            <td>{% for main in dish.allergens %}{{main}} {% endfor %}</td>
+                            {% if dish.image_url  not in [" ", "/"] %}
+                                <td><img src="{{ url_for('static', filename='img/') }}{{ dish.image_url }}" width="100px" height="100px"></td>
+                            {% else %}
+                                <td><img src="{{ url_for('static', filename='img/AdminLTELogo.png') }}" width="100px" height="100px"></td>
+                            {% endif %}
+                            <td width="20%">
+                                <a class="btn btn-primary single" href="{{ url_for('dish_edit', dish_id = dish.name ) }}">
+                                    <i class="fa fa-edit"></i> 修改
+                                </a>
+                                <a class="btn btn-danger" href="/delete_dish?id={{dish.name}}">删除</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">无相关记录！</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
