@@ -42,9 +42,7 @@ class Student:
         参数:
             student_id: 学号 str
             name: 姓名 str
-            password: 密
-                
-            码 str
+            password: 密码 str
             profile: 个人简介 PersonalProfile
             dining_info_list: 就餐信息列表 List[DiningInfo]
         '''

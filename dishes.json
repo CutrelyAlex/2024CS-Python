@@ -1,27 +1,15 @@
 [
     {
         "location": "南区",
-        "name": "2",
-        "price": 123.0,
-        "category": "2",
-        "image_url": "user1-128x128.jpg",
-        "calories": 123.0,
-        "allergens": [
-            "132",
-            "22"
-        ],
-        "description": ""
-    },
-    {
-        "location": "北区",
-        "name": "twst1",
+        "name": "酸辣拌面",
         "price": 12.0,
-        "category": "wu",
-        "image_url": "",
-        "calories": 30.0,
+        "category": "主菜",
+        "image_url": "书籍.png",
+        "calories": 450.0,
         "allergens": [
-            "12323",
-            "667"
+            "酸菜",
+            "肉末",
+            "面条"
         ],
         "description": ""
     }

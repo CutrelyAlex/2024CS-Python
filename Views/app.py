@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for, jsonify
 from Core.DishController import DishController
 from Core.StudentController import StudentController
 from forms import DishForm
@@ -8,8 +8,7 @@ dishInit = DishController() # 初始化菜品对象
 stuInit = StudentController() # 初始化学生对象
 
 app = Flask(__name__) # 项目名称
-app.config['SECRET_KEY'] = '22ssddaxdsd'
-csrf = CSRFProtect(app)
+app.config['WTF_CSRF_ENABLED'] = False
 
 '''首页'''
 @app.route('/')
@@ -51,6 +50,7 @@ def dish_add():
             return redirect('dish_list')
     return render_template('MangerDish/add.html', form=f)
 
+'''修改菜品'''
 @app.route('/dish_edit/<dish_id>', methods=['GET', 'POST'])
 def dish_edit(dish_id):
     if request.method == 'GET':
@@ -84,12 +84,17 @@ def dish_edit(dish_id):
             return render_template('MangerDish/edit.html', form=f) 
 
 '''删除菜品'''
-@app.route('/delete_dish')
-def delete_dish():
-    remove_dish = request.args.get("id")
+@app.route('/dish_del', methods=['GET', 'POST'])
+def dish_del():
+    remove_dish = request.values.get("dish_id")
     dishInit.remove_dish(remove_dish)
-    return redirect('/dish_list')
+    return jsonify({"code":"200", "message":"删除成功"})
 
+'''学生列表'''
+@app.route('/stu_list')
+def stu_list():
+    students = stuInit.get_all_students()
+    
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css') }}">
     <script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     {% block ext_css %}
     {% endblock %}
 </head>
@@ -43,21 +44,9 @@
                  class="brand-image img-circle elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">SZTU食堂管理系统</span>
         </a>
+        <br>
+        <br>
         <div class="sidebar">
-            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                    <img src="{{ url_for('static',filename='img/user2-160x160.jpg' )}}" class="img-circle elevation-2" alt="User Image">
-                </div>
-                <div class="info"><p>
-{#                    <a>{% if request.user.is_authenticated %}#}
-{#                        {{ request.user.username }}#}
-{#                    {% else %}#}
-{#                        未登录，非法#}
-{#                    {% endif %}#}
-{#                    </a>&nbsp;&nbsp;&nbsp;&nbsp;#}
-                    <a href="#">退出</a></p>
-                </div>
-            </div>
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
@@ -82,7 +71,13 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-circle text-danger"></i>
-                                <p class="text">学生管理</p>
+                                <p class="text">学生列表</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon far fa-circle text-danger"></i>
+                                <p class="text">学生详情</p>
                             </a>
                         </li>
                 </ul>
