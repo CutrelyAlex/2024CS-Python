@@ -6,7 +6,7 @@ from Core.DishModel import Dish
 
 class DiningInfo:
     '''就餐信息类'''
-    def __init__(self, dining_time: datetime, dishes: List[str], remarks: str, location: str = "Unknown"):
+    def __init__(self, dining_time: datetime, dishes: List[str], remarks: str, location: str = "Unknown", images: List[str] = None):
         '''
         初始化 DiningInfo 对象
         参数:
@@ -14,11 +14,13 @@ class DiningInfo:
             dishes: 对应菜品名称列表 List[str]
             remarks: 备注 str
             location: 就餐位置 str (默认 "Unknown")
+            images: 就餐后照片列表 List[str] (默认空列表)
         '''
         self.dining_time = dining_time
         self.dishes = dishes
         self.remarks = remarks
         self.location = location
+        self.images = images if images is not None else []
 
 class PersonalProfile:
     '''个人简介类'''
@@ -42,9 +44,7 @@ class Student:
         参数:
             student_id: 学号 str
             name: 姓名 str
-            password: 密
-                
-            码 str
+            password: 密码 str
             profile: 个人简介 PersonalProfile
             dining_info_list: 就餐信息列表 List[DiningInfo]
         '''
@@ -116,7 +116,8 @@ def convert_to_students(students_data: List[Dict[str, Any]]) -> List[Student]:
                     dining_time=datetime.fromisoformat(dining_data['dining_time']),
                     dishes=dining_data['dishes'],
                     remarks=dining_data['remarks'],
-                    location=dining_data.get('location', "Unknown") 
+                    location=dining_data.get('location', "Unknown"),
+                    images=dining_data.get('images', [])
                 )
                 dining_info_list.append(dining_info)
             student = Student(
@@ -149,7 +150,8 @@ def save_students_to_json(file_path: str, students: List[Student]) -> None:
                     'dining_time': dining_info.dining_time.isoformat(),
                     'dishes': dining_info.dishes,
                     'remarks': dining_info.remarks,
-                    'location': dining_info.location  
+                    'location': dining_info.location,
+                    'images': dining_info.images  # 添加此行
                 } for dining_info in student_data['dining_info_list']
             ]
         with open(file_path, 'w', encoding='utf-8') as file:
