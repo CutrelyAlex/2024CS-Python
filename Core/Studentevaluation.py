@@ -10,25 +10,25 @@ class Evaluation:
     """
     评价类，用于表示学生对菜品的评价信息
     """
-    def __init__(self, date: datetime, dish: str, evaluator_id: str, content: str):
+    def __init__(self, date: datetime, dish: str, student_id: str, content: str):
         """
         初始化Evaluation对象
         参数:
             date: 评价日期 datetime
             dish: 对应菜品名称 str
-            evaluator_id: 评价人学号 str
+            student_id: 评价人学号 str
             content: 评价内容 str
         """
         self.date = date
         self.dish = dish
-        self.evaluator_id = evaluator_id
+        self.student_id = student_id
         self.content = content
 
     def __str__(self) -> str:
         """
         返回评价的字符串表示形式
         """
-        return f"评价人学号: {self.evaluator_id}，菜品: {self.dish}，评价内容: {self.content}，评价日期: {self.date}"
+        return f"评价人学号: {self.student_id}，菜品: {self.dish}，评价内容: {self.content}，评价日期: {self.date}"
 
     def to_dict(self) -> Dict[str, Any]:
         """
@@ -37,7 +37,7 @@ class Evaluation:
         return {
             "date": self.date.isoformat(),
             "dish": self.dish,
-            "evaluator_id": self.evaluator_id,
+            "student_id": self.student_id,
             "content": self.content
         }
 
@@ -95,9 +95,9 @@ def convert_to_evaluations(evaluations_data: List[Dict[str, Any]]) -> List[Evalu
                 raise ValueError("每个评价数据应为字典")
             date = datetime.fromisoformat(data['date'])
             dish = data['dish']
-            evaluator_id = data['evaluator_id']
+            student_id = data['student_id']
             content = data['content']
-            evaluation = Evaluation(date, dish, evaluator_id, content)
+            evaluation = Evaluation(date, dish, student_id, content)
             evaluations.append(evaluation)
         except (KeyError, ValueError, json.JSONDecodeError) as e:
             print(f"数据转换时出错: {e}")
