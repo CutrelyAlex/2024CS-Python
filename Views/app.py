@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, redirect, flash, url_for, jsonify
 from Core.DishController import DishController
 from Core.StudentController import StudentController
-from forms import DishForm
-from flask_wtf import CSRFProtect
+from forms import DishForm, StuForm
 
 dishInit = DishController() # 初始化菜品对象
 stuInit = StudentController() # 初始化学生对象
@@ -91,10 +90,43 @@ def dish_del():
     return jsonify({"code":"200", "message":"删除成功"})
 
 '''学生列表'''
-@app.route('/stu_list')
+@app.route('/stu_list', methods=['GET','POST'])
 def stu_list():
     students = stuInit.get_all_students()
-    
+    if request.method == 'GET':
+        return render_template('MangerStu/index.html', students=students)
+    elif request.method == 'POST':
+        respone = request.form.get('name') # 获取搜索框中的内容
+        if respone:
+            students = stuInit.find_student_by_name(respone)
+            if not students:
+                students = stuInit.find_student_by_id(respone)
+        else:
+            students = stuInit.get_all_students()
+        return render_template('MangerStu/index.html', students=students)
 
+'''新增学生'''
+@app.route('/stu_add', methods=['GET', 'POST'])
+def stu_add():
+    f = StuForm()
+    if f.validate_on_submit():
+        stu_id = stuInit.find_student_by_id(f.student_id.data)
+        if stu_id:
+            flash("学号重复，请查询")
+            return render_template("MangerStu/add.html", form=f)
+        else:
+            stuInit.add_student(student_id=f.student_id.data, name=f.name.data,
+            price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
+            description="", calories=f.calories.data)
+            return redirect('dish_list')
+    return render_template('MangerDish/add.html', form=f)
+
+'''删除学生信息'''
+@app.route('/stu_del', methods=['GET','POST'])
+def stu_del():
+    remove_stu_id = request.values.get("stu_id")
+    stuInit.remove_student(remove_stu_id)
+    return jsonify({"code":"200", "message":"删除成功"})
+    
 if __name__ == '__main__':
     app.run(debug=True)
