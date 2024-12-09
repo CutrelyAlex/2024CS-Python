@@ -1,132 +1,17 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, jsonify
-from Core.DishController import DishController
-from Core.StudentController import StudentController
-from forms import DishForm, StuForm
-
-dishInit = DishController() # 初始化菜品对象
-stuInit = StudentController() # 初始化学生对象
+from flask import Flask, render_template
+from flask_ckeditor import CKEditor
+from apps import Dish, Stu
 
 app = Flask(__name__) # 项目名称
-app.config['WTF_CSRF_ENABLED'] = False
+app.config['WTF_CSRF_ENABLED'] = False # 免除csrf保护
+app.register_blueprint(Dish.dish_bp) # 加载菜品蓝图
+app.register_blueprint(Stu.stu_bp)   # 加载学生蓝图
+ckeditor = CKEditor(app) # 富文本编辑
 
 '''首页'''
 @app.route('/')
 def index():
     return render_template('base.html')
 
-'''获取菜品列表'''
-@app.route('/dish_list', methods=['GET', 'POST'])
-def dish_list():
-    f = DishForm()
-    if request.method == 'GET':
-        dishes = dishInit.get_all_dishes()
-        return render_template("MangerDish/index.html", dishes=dishes, form=f)
-    if request.method == 'POST':
-        name = request.form.get("name")
-        if name:
-            dishes = dishInit.find_dish_by_name(name) # 根据名字找查菜品
-            if not dishes:
-                dishes = dishInit.find_dish_by_location(name) # 根据位置找查菜品
-        else:
-            dishes = dishInit.get_all_dishes()
-        return render_template("MangerDish/index.html",
-                dishes=dishes, form=f)
-
-'''添加菜品'''
-@app.route('/dish_add', methods=['GET','POST'])
-def dish_add():
-    f = DishForm()
-    if f.validate_on_submit():
-        name_list = dishInit.get_all_dish_names()
-        if f.name.data in name_list:
-            flash("菜名重复，请查询")
-            return render_template("MangerDish/add.html", form=f)
-        else:
-            toListAllergens = f.allergens.data.split() # 将str:allergens --> list:allergens
-            dishInit.add_dish(location=f.location.data, name=f.name.data,
-            price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
-            description="", calories=f.calories.data)
-            return redirect('dish_list')
-    return render_template('MangerDish/add.html', form=f)
-
-'''修改菜品'''
-@app.route('/dish_edit/<dish_id>', methods=['GET', 'POST'])
-def dish_edit(dish_id):
-    if request.method == 'GET':
-        dish_obj = dishInit.find_dish_by_name(dish_id)[0] # 根据菜名获得菜品全部信息
-        f = DishForm()
-        con_allergens = ""  # 将lsit:allergens --> str:allergens
-        for show in dish_obj.allergens:
-            con_allergens = con_allergens + " " + show 
-        f.name.data = dish_obj.name
-        f.category.data = dish_obj.category
-        f.img_url.data = dish_obj.image_url
-        f.calories.data = dish_obj.calories
-        f.price.data = dish_obj.price
-        f.location.data = dish_obj.location
-        f.allergens.data = con_allergens
-        return render_template('MangerDish/edit.html', form=f)
-    elif request.method == 'POST':
-        f = DishForm(request.form)
-        dish_obj = dishInit.find_dish_by_name(dish_id)[0]
-        dishInit.remove_dish(dish_obj) # 删除原有菜品对象
-        if f.validate_on_submit(): # 检测是否获取了表单
-            dish_obj.name = f.name.data
-            dish_obj.category = f.category.data
-            dish_obj.image_url = f.img_url.data
-            dish_obj.calories = f.calories.data
-            dish_obj.price = f.price.data
-            dish_obj.location = f.location.data
-            dish_obj.allergens = f.allergens.data.split()
-            return redirect(url_for('dish_list'))
-        else:
-            return render_template('MangerDish/edit.html', form=f) 
-
-'''删除菜品'''
-@app.route('/dish_del', methods=['GET', 'POST'])
-def dish_del():
-    remove_dish = request.values.get("dish_id")
-    dishInit.remove_dish(remove_dish)
-    return jsonify({"code":"200", "message":"删除成功"})
-
-'''学生列表'''
-@app.route('/stu_list', methods=['GET','POST'])
-def stu_list():
-    students = stuInit.get_all_students()
-    if request.method == 'GET':
-        return render_template('MangerStu/index.html', students=students)
-    elif request.method == 'POST':
-        respone = request.form.get('name') # 获取搜索框中的内容
-        if respone:
-            students = stuInit.find_student_by_name(respone)
-            if not students:
-                students = stuInit.find_student_by_id(respone)
-        else:
-            students = stuInit.get_all_students()
-        return render_template('MangerStu/index.html', students=students)
-
-'''新增学生'''
-@app.route('/stu_add', methods=['GET', 'POST'])
-def stu_add():
-    f = StuForm()
-    if f.validate_on_submit():
-        stu_id = stuInit.find_student_by_id(f.student_id.data)
-        if stu_id:
-            flash("学号重复，请查询")
-            return render_template("MangerStu/add.html", form=f)
-        else:
-            stuInit.add_student(student_id=f.student_id.data, name=f.name.data,
-            price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
-            description="", calories=f.calories.data)
-            return redirect('dish_list')
-    return render_template('MangerDish/add.html', form=f)
-
-'''删除学生信息'''
-@app.route('/stu_del', methods=['GET','POST'])
-def stu_del():
-    remove_stu_id = request.values.get("stu_id")
-    stuInit.remove_student(remove_stu_id)
-    return jsonify({"code":"200", "message":"删除成功"})
-    
 if __name__ == '__main__':
     app.run(debug=True)

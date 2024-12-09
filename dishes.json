@@ -1,16 +1,1 @@
-[
-    {
-        "location": "南区",
-        "name": "酸辣拌面",
-        "price": 12.0,
-        "category": "主菜",
-        "image_url": "书籍.png",
-        "calories": 450.0,
-        "allergens": [
-            "酸菜",
-            "肉末",
-            "面条"
-        ],
-        "description": ""
-    }
-]
+[]

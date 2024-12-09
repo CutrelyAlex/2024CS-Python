@@ -2,6 +2,7 @@ from wtforms import StringField, TextAreaField, SelectField, FileField, FloatFie
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms.validators import Length, DataRequired
+from flask_ckeditor import CKEditorField
 
 class DishForm(FlaskForm):
     name = StringField(label="菜的名称", validators=[
@@ -31,6 +32,10 @@ class DishForm(FlaskForm):
     allergens = TextAreaField(label="菜的原材料", validators=[
         DataRequired(message="材料不能为空"),
     ], render_kw={"class":"form-control", "placeholder":"请输入材料", "rows":5, "cols":50})
+
+    description = CKEditorField(label="菜品详情",
+                validators=[DataRequired()],
+                render_kw={"class":"form-control", "placeholder":"菜品描述和上传图片"})
 
 
 class StuForm(FlaskForm):
