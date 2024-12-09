@@ -2,7 +2,7 @@
 StudentController 模块
 
 提供以下接口:
-- add_student(student: Student): 添加学生
+- add_student(location: str, name: str, student_id: str, password: str, profile: str, dining_info_list: List[DiningInfo]): 添加学生
 - find_student_by_id(student_id: str) -> Student: 根据学号查找学生
 - find_student_by_name(name: str) -> List[Student]: 根据姓名查找学生
 - get_all_students() -> List[Student]: 获取所有学生
@@ -38,20 +38,26 @@ class StudentController:
     def __init__(self):
         self.students = convert_to_students(load_students_from_json(student_path))
     
-    def add_student(self, student: Student):
+    def add_student(self, location: str, name: str, student_id: str, password: str, profile: str, dining_info_list: List[DiningInfo]):
         """
         添加学生。
 
         参数:
-            student (Student): 要添加的学生对象
+            location (str): 学生的地点
+            name (str): 学生的姓名
+            student_id (str): 学生的学号
+            password (str): 学生的密码
+            profile (str): 学生的简介
+            dining_info_list (List[DiningInfo]): 学生的餐饮记录列表
 
         返回:
             None 如果学生已存在
         """
         for existing_student in self.students:
-            if existing_student.student_id == student.student_id:
+            if existing_student.student_id == student_id:
                 return None
-        self.students.append(student)
+        new_student = Student(location, name, student_id, password, profile, dining_info_list)
+        self.students.append(new_student)
         save_students_to_json(student_path, self.students)
     
     def find_student_by_id(self, student_id: str) -> Student:
@@ -72,7 +78,7 @@ class StudentController:
     
     def find_student_by_name(self, name: str) -> List[Student]:
         """
-        根据姓名查找学生。
+        ���据姓名查找学生。
 
         参数:
             name (str): 学生的姓名
@@ -216,6 +222,8 @@ class StudentController:
                             record.remarks = kwargs['remarks']
                         if 'location' in kwargs:
                             record.location = kwargs['location']
+                        if 'images' in kwargs:
+                            record.images = kwargs['images'] 
                         save_students_to_json(student_path, self.students)
                         return
         return None
