@@ -25,18 +25,13 @@ class Dish:
         self.calories = calories
         self.allergens = allergens
         self.description = description
-        self.validate()
+        # self.validate()
 
-    def validate(self):
-        '''验证菜品数据的有效性'''
-        if not self.name:
-            raise ValueError("菜品名称不能为空")
-        if self.price < 0:
-            raise ValueError("菜品价格不能为负数")
-        if self.calories < 0:
-            raise ValueError("菜品热量不能为负数")
-        if not isinstance(self.allergens, list):
-            raise ValueError("过敏源应为列表")
+    '''Debug模式下显示菜品信息'''
+    def display_info(self):
+        return f"菜品名称: {self.name}\n价格: {self.price}元\n分类: {self.category}\n热量: {self.calories} \
+    \n过敏源: {', '.join(self.allergens)}\n描述: {self.description} \
+    位置:{self.location}"
 
 
     def __str__(self) -> str:
