@@ -20,5 +20,12 @@
                 "images": []
             }
         ]
+    },
+    {
+        "student_id": "123456",
+        "name": "Tom",
+        "password": "123456",
+        "profile": "I am Tom",
+        "dining_info_list": []
     }
 ]

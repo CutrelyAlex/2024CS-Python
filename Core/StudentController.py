@@ -38,12 +38,11 @@ class StudentController:
     def __init__(self):
         self.students = convert_to_students(load_students_from_json(student_path))
     
-    def add_student(self, location: str, name: str, student_id: str, password: str, profile: str, dining_info_list: List[DiningInfo]):
+    def add_student(self, name: str, student_id: str, password: str, profile: str, dining_info_list: List[DiningInfo]):
         """
         添加学生。
 
         参数:
-            location (str): 学生的地点
             name (str): 学生的姓名
             student_id (str): 学生的学号
             password (str): 学生的密码
@@ -56,7 +55,7 @@ class StudentController:
         for existing_student in self.students:
             if existing_student.student_id == student_id:
                 return None
-        new_student = Student(location, name, student_id, password, profile, dining_info_list)
+        new_student = Student(student_id, name, password, profile, dining_info_list)
         self.students.append(new_student)
         save_students_to_json(student_path, self.students)
     
