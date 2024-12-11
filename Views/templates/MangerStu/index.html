@@ -1,150 +1,112 @@
-{% extends 'base.html' %}
 
+{% extends "base.html" %}
 {% block content %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h1 class="m-0">
-                            学生名单
-                            <small>列表</small>
-                        </h1>
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">
+                                商品信息模块
+                                <small>列表</small>
+                            </h1>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 search-collapse">
-                    <form id="search_form" method="post">
-                        <div class="form-group row">
-                            <label for="inputtext" class="col-form-label">学号或名字：</label>
-                            <div class="col-md-4">
-                                <input type="text" id="search_name" name="name" class="form-control" placeholder="请输入学号或名字"/>
+        <!--内容开始-->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 search-collapse">
+                        <form id="search_form">
+                            <div class="select-list">
+                                <ul>
+                                    <li>
+                                        <label>商品名称： </label>
+
+                                        <input type="text" id="student_id" name="student_id" value=""/>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-primary btn-edit" id="btn_search"><i class="fa fa-search"></i>搜索</a>
+                                        <a class="btn btn-success" href="{{ url_for('stu.stu_add') }}">
+                                            <i class="fa fa-plus"></i> 新增
+                                        </a>
+
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-md-4">
-                                <button type="submit" class="btn btn-info"><i class="fa fa-plus"></i>查询</button>
-                                <a class="btn btn-primary single" href="#">
-                                    <i class="fa fa-plus"></i> 新增
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="col-sm-12 select-table table-striped">
+                        <table id="bootstrap-table"></table>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="col-sm-12 main">
-        <br>
-        <div class="panel panel-primary">
-            <div class="panel-body">
-                <table class="table table-bordered table-condensed table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>学号</th>
-                        <th>名字</th>
-                        <th>密码</th>
-                        <th>个人信息</th>
-                        <th>自我描述</th>
-                        <th>功能操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if students %}
-                        {% for student in students %}
-                            <tr>
-                                <td>{{ student.student_id }}</td>
-                                <td>{{ student.name }}</td>
-                                <td>{{ student.password }}</td>
-                                {% if student.profile.gender == 'Male' %}
-                                    <td>{{ student.profile.age }}岁 男
-                                    </td>
-                                {% else %}
-                                    <td>{{ student.profile.age }}岁 女
-                                    </td>
-                                {% endif %}
-                                <td>{{ student.profile.description }}</td>
-                                <td width="20%">
-                                    <a class="btn btn-primary single" href="#">
-                                        <i class="fa fa-edit"></i> 修改
-                                    </a>
-                                    <a class="btn btn-danger" href="javascript:void(0)" onclick="showDeleteModal(this)">删除</a>
-                                    <input type="hidden" id="id_hidden" value={{ student.student_id }}>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="7">无相关记录！</td>
-                        </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="delModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-  header">
-                <h4 class="modal-title" style="float:left">提示信息</h4>
-                <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
+        </section>
 
-            </div>
-            <div class="modal-body">
-                <p id="info">您确认要删除当前数据吗？</p>
-                <input type="hidden" id="del_id">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <a id="delButton" class="btn btn-success" data-dismiss="modal">确定</a>
-            </div>
-        </div>
     </div>
-</div>
-<script>
-    // 打开模态框并设置需要删除的ID
-    function showDeleteModal(obj) {
-            var $tds = $(obj).parent().children();// 获取到删除元素的所在列
-            var delete_id = $($tds[2]).val();// 获取隐藏控件的ID
-            console.log(delete_id)
-            $("#del_id").val(delete_id);// 给模态框中需要删除的ID赋值
-            $("#delModal").modal({
-                backdrop: 'static',
-                keyboard: false
-            })
+
+    <script src="{{ url_for('static',filename='plugins/bootstrap-table/bootstrap-table.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='plugins/bootstrap-table/bootstrap-table-zh-CN.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='plugins/bootstrap-table/bootstrap-table.min.css') }}"></script>
+
+    <script>
+        InitMainTable();
+
+        function InitMainTable() {
+            $('#bootstrap-table').bootstrapTable({
+                url: '/stu/stu_list',         //请求后台的URL（*）
+                method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true
+                pagination: false,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: function (params) {
+                    var temp = {
+                        page: (params.offset / params.limit) + 1,//当前页数
+                        student_id: $("#student_id").val(),
+                        status: $("#status").val()
+                    };
+                    return temp;
+                },//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1,                       //初始化默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                uniqueId: "id",              //每一行的唯一标识，一般为主键列
+                columns: [{checkbox: true},
+                    {field: 'student_id', title: '学号'},
+                    {field: 'name', title: '姓名'},
+                    {field: 'password', title: '密码'},
+                    {field: 'age', title: '年龄'},
+                    {field: 'gender', title: '性别'},
+                    {title: '操作', field: 'id', formatter: operation}
+                ]
+            });
         };
 
-    $(function () {
-        // 模态框的确定按钮的点击事件
-        $("#delButton").click(function () {
-            var id = $("#del_id").val();
-            console.log("del" + id)
-            // ajax异步删除
-            $.ajax({
-                url: "/stu/stu_del",
-                type: "POST",
-                data:{stu_id: id},
-                success: function (result) {
-                    if (result.code == "200") {
-                        $("#delModal").modal("hide");
-                        alert(result.message);
-                        window.location.href = "{{ url_for('stu.stu_list') }}";
-                    }
-                    else{
-                        alert(result.message);
-                    }
-                }
-            })
-        });
-    });
-</script>
+        //删除、编辑操作
+        function operation(value, row, index) {
+            var id=index
+            var link='{{ url_for("stu.stu_edit") }}?id='+value
+            var htm = " <a class='btn btn-xs btn-primary single' href='"+link+"' " +
+                " <i class=\"fa fa-edit\"></i> 修改\n" +" </a>  <button class='btn btn-danger btn-del'>删除</button>"
+            return htm;
+        }
+
+        //查询按钮事件
+        $('#btn_search').click(function () {
+            $('#bootstrap-table').bootstrapTable('refresh', {
+                url: '/stu/stu_list'
+            });
+        })
+
+    </script>
 {% endblock %}

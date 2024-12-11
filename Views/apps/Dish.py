@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, jsonify,redirect, flash
+from flask import Blueprint, render_template, request, jsonify,redirect, flash, url_for
 from forms import DishForm
 from flask_wtf import CSRFProtect, csrf
+
 from Core.DishController import DishController
 
 '''建立菜品蓝图'''
@@ -35,7 +36,7 @@ def dish_add():
             flash("菜名重复，请查询")
             return render_template("MangerDish/add.html", form=f)
         else:
-            print(f.description.data)
+            print(f.validate())
             toListAllergens = f.allergens.data.split() # 将str:allergens --> list:allergens
             dishInit.add_dish(location=f.location.data, name=f.name.data,
             price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
@@ -64,7 +65,7 @@ def dish_edit(dish_id):
         f = DishForm(request.form)
         dish_obj = dishInit.find_dish_by_name(dish_id)[0]
         dishInit.remove_dish(dish_obj) # 删除原有菜品对象
-        if f.validate_on_submit(): # 检测是否获取了表单
+        if f.is_submitted(): # 检测是否获取了表单,不能通过validate验证？？？
             dish_obj.name = f.name.data
             dish_obj.category = f.category.data
             dish_obj.image_url = f.img_url.data
@@ -72,7 +73,7 @@ def dish_edit(dish_id):
             dish_obj.price = f.price.data
             dish_obj.location = f.location.data
             dish_obj.allergens = f.allergens.data.split()
-            return redirect(url_for('dish_list'))
+            return redirect(url_for('dish.dish_list'))
         else:
             return render_template('MangerDish/edit.html', form=f) 
 

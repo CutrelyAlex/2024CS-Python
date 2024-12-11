@@ -33,11 +33,16 @@ def stu_add():
             flash("学号重复，请查询")
             return render_template("MangerStu/add.html", form=f)
         else:
-            stuInit.add_student(student_id=f.student_id.data, name=f.name.data,
-            price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
-            description="", calories=f.calories.data)
-            return redirect('dish_list')
-    return render_template('MangerDish/add.html', form=f)
+            stuInit.add_student(location=f.student_id.data, name=f.name.data,
+            student_id=f.student_id.data, password=f.password.data,profile=f.age.data,
+            dining_info_list='')
+            return redirect('stu_list')
+    return render_template('MangerStu/add.html', form=f)
+
+
+@stu_bp.route("/stu_edit", methods=['GET', 'POST'])
+def stu_edit():
+    pass
 
 '''删除学生信息'''
 @stu_bp.route('/stu_del', methods=['GET','POST'])

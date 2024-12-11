@@ -1,4 +1,4 @@
-from wtforms import StringField, TextAreaField, SelectField, FileField, FloatField, IntegerField
+from wtforms import StringField, TextAreaField, SelectField, FileField, FloatField, IntegerField,DateTimeField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms.validators import Length, DataRequired
@@ -61,9 +61,11 @@ class StuForm(FlaskForm):
     render_kw={"class":"form-control", "placeholder":"请输入年龄"})
 
     gender = SelectField(label="性别",
-    choices=[("-1", "--请选择--") ,("男","男"),("女", "女")])
+    choices=[("-1", "--请选择--") ,("男","男"),("女", "女")],
+    render_kw={"class":"form-control"})
 
     description = TextAreaField(label="描述",
     validators=[DataRequired(message="材料不能为空")],
-    render_kw={"class":"form-control", "rows":5, "cols":50}
-    )
+    render_kw={"class":"form-control", "rows":5, "cols":50})
+
+    
