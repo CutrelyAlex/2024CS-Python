@@ -1,4 +1,4 @@
-from wtforms import StringField, TextAreaField, SelectField, FileField, FloatField, IntegerField,DateTimeField
+from wtforms import StringField, TextAreaField, SelectField,FileField, FloatField,DateTimeField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms.validators import Length, DataRequired
@@ -56,7 +56,7 @@ class StuForm(FlaskForm):
     validators=[DataRequired(message="密码不能为空")],
     render_kw={"class":"form-control", "placeholder":"请输入密码"})
 
-    age = IntegerField(label="学生年龄",
+    age = StringField(label="学生年龄",
     validators=[DataRequired(message="学生年龄不能为空")],
     render_kw={"class":"form-control", "placeholder":"请输入年龄"})
 

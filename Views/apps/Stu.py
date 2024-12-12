@@ -34,7 +34,7 @@ def stu_add():
             return render_template("MangerStu/add.html", form=f)
         else:
             stuInit.add_student(location=f.student_id.data, name=f.name.data,
-            student_id=f.student_id.data, password=f.password.data,profile=f.age.data,
+            student_id=f.student_id.data, password=f.password.data,profile=int(f.age.data),
             dining_info_list='')
             return redirect('stu_list')
     return render_template('MangerStu/add.html', form=f)
