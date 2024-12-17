@@ -21,11 +21,20 @@
             <div class="row">
                 <div class="col-12 search-collapse">
                     <form id="search_form" method="post">
-                        {{ form.csrf_token }}
                         <div class="form-group row">
                             <label for="inputtext" class="col-form-label">菜品名称：</label>
                             <div class="col-md-4">
                                 <input type="text" id="search_name" name="name" class="form-control" placeholder="请输入菜的名称"/>
+                            </div>
+                            <br>
+                            <br>
+                            <label for="inputtext" class="col-form-label">菜品位置：</label>
+                            <div class="col-md-2">
+                                <select type="text" id="search_name" name="location" class="form-control">
+                                    <option value="-1">请选择---</option>
+                                    <option value="南区">南区</option>
+                                    <option value="北区">北区</option>
+                                </select>
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-info"><i class="fa fa-plus"></i>查询</button>
@@ -42,7 +51,7 @@
     <div class="col-sm-12 main">
         <br>
         <div class="panel panel-primary">
-            <div class="panel-body">
+            <div class="panel-body text-center">
                 <table class="table table-bordered table-condensed table-striped table-hover">
                     <thead>
                     <tr>
@@ -52,6 +61,7 @@
                         <th>热量</th>
                         <th>材料</th>
                         <th>图片</th>
+                        <th>菜品描述</th>
                         <th>功能操作</th>
                     </tr>
                     </thead>
@@ -63,17 +73,14 @@
                             <td>{{ dish.price }}</td>
                             <td>{{ dish.calories }}</td>
                             <td>{% for main in dish.allergens %}{{main}} {% endfor %}</td>
-                            {% if dish.image_url  not in [" ", "/"] %}
-                                <td><img src="{{ url_for('static', filename='img/') }}{{ dish.image_url }}" width="100px" height="100px"></td>
-                            {% else %}
-                                <td><img src="{{ url_for('static', filename='img/AdminLTELogo.png') }}" width="100px" height="100px"></td>
-                            {% endif %}
+                            <td><img src="{{ url_for('static', filename='img/') }}{{ dish.image_url }}" width="50px" height="50px"></td>
+                            <td>{{ dish.description }}</td>
                             <td width="20%">
                                 <a class="btn btn-primary single" href="{{ url_for('dish.dish_edit', dish_id = dish.name ) }}">
                                     <i class="fa fa-edit"></i> 修改
                                 </a>
                                 <a class="btn btn-danger" href="javascript:void(0)" onclick="showDeleteModal(this)">删除</a>
-                                <input type="hidden" id="id_hidden" value={{ dish.name }}>
+                                <input type="hidden" id="id_hidden" value="{{ dish.name, dish.location }}">
                             </td>
                         </tr>
                     {% else %}
@@ -110,6 +117,7 @@
     </div>
 </div>
 <script>
+    
     // 打开模态框并设置需要删除的ID
     function showDeleteModal(obj) {
             var $tds = $(obj).parent().children();// 获取到删除元素的所在列
@@ -135,7 +143,6 @@
                 success: function (result) {
                     if (result.code == "200") {
                         $("#delModal").modal("hide");
-                        alert(result.message);
                         window.location.href = "{{ url_for('dish.dish_list') }}";
                     }
                     else{

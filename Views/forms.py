@@ -2,7 +2,6 @@ from wtforms import StringField, TextAreaField, SelectField,FileField, FloatFiel
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms.validators import Length, DataRequired
-from flask_ckeditor import CKEditorField
 
 class DishForm(FlaskForm):
     name = StringField(label="菜的名称", validators=[
@@ -15,7 +14,7 @@ class DishForm(FlaskForm):
     ], render_kw={"class":"form-control", "placeholder":"请输入种类"})
 
     img_url = FileField(label="菜品图片",
-    validators=[FileAllowed(upload_set=['png','jpg'],message="只能上传图片格式")])
+    validators=[FileAllowed(upload_set=['png','jpg'],message="只能上传图片格式")],)
     
     calories = FloatField(label="热量",
             validators=[DataRequired(message="热量不能为空"),],
@@ -33,9 +32,9 @@ class DishForm(FlaskForm):
         DataRequired(message="材料不能为空"),
     ], render_kw={"class":"form-control", "placeholder":"请输入材料", "rows":5, "cols":50})
 
-    description = CKEditorField(label="菜品详情",
+    description = TextAreaField(label="菜品详情",
                 validators=[DataRequired()],
-                render_kw={"class":"form-control", "placeholder":"菜品描述和上传图片"})
+                render_kw={"class":"form-control", "placeholder":"菜品描述和上传图片", "rows":5, "cols":50})
 
 
 class StuForm(FlaskForm):

@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, redirect, flash
 from forms import StuForm
-from flask_wtf import CSRFProtect, csrf
 from Core.StudentController import StudentController
 
 stu_bp = Blueprint('stu', __name__, url_prefix='/stu')
@@ -10,18 +9,7 @@ stuInit = StudentController()
 '''学生列表'''
 @stu_bp.route('/stu_list', methods=['GET','POST'])
 def stu_list():
-    students = stuInit.get_all_students()
-    if request.method == 'GET':
-        return render_template('MangerStu/index.html', students=students)
-    elif request.method == 'POST':
-        respone = request.form.get('name') # 获取搜索框中的内容
-        if respone:
-            students = stuInit.find_student_by_name(respone)
-            if not students:
-                students = stuInit.find_student_by_id(respone)
-        else:
-            students = stuInit.get_all_students()
-        return render_template('MangerStu/index.html', students=students)
+   return render_template("MangerStu/index.html")
 
 '''新增学生'''
 @stu_bp.route('/stu_add', methods=['GET', 'POST'])

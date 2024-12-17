@@ -1,46 +1,60 @@
 from flask import Blueprint, render_template, request, jsonify,redirect, flash, url_for
 from forms import DishForm
-from flask_wtf import CSRFProtect, csrf
-
+import os
 from Core.DishController import DishController
 
-'''建立菜品蓝图'''
+'''
+    建立菜品蓝图
+    有以下几个主要函数：
+        dish_list() 显示菜品列表页面
+        dish_add() 添加菜品页面
+        dish_edit() 修改菜品页面
+        diish_delete 删除菜品页面
+'''
 
-dish_bp = Blueprint("dish", __name__, url_prefix='/dish')
+dish_bp = Blueprint("dish", __name__, url_prefix='/dish') # 建立菜品蓝图 url: /dish/
 dishInit = DishController() # 初始化菜品对象
+UPLOAD_FOLDER = 'Views\\static\\img'
 
 @dish_bp.route('/dish_list', methods=['GET','POST'])
 def dish_list():
-    f = DishForm()
     if request.method == 'GET':
         dishes = dishInit.get_all_dishes()
-        return render_template("MangerDish/index.html", dishes=dishes, form=f)
+        return render_template("MangerDish/index.html", dishes=dishes, dishInit=dishInit)
     if request.method == 'POST':
         name = request.form.get("name")
-        if name:
-            dishes = dishInit.find_dish_by_name(name) # 根据名字找查菜品
-            if not dishes:
-                dishes = dishInit.find_dish_by_location(name) # 根据位置找查菜品
+        location = request.form.get("location")
+        if name and location != '-1':
+            dishes = dishInit.find_dish_by_location(location, name)
+        elif name and location == '-1':
+            dishes = dishInit.find_dish_by_name(name)
+        elif not name and location != '-1':
+            dishes = dishInit.get_all_dishes_by_location(location)
         else:
             dishes = dishInit.get_all_dishes()
         return render_template("MangerDish/index.html",
-                dishes=dishes, form=f)
+                dishes=dishes)
 
 '''添加菜品'''
 @dish_bp.route('/dish_add', methods=['GET','POST'])
 def dish_add():
     f = DishForm()
     if f.validate_on_submit():
-        name_list = dishInit.get_all_dish_names()
-        if f.name.data in name_list:
-            flash("菜名重复，请查询")
+        img = request.files['img_url']
+        if img.filename != '':
+            img.save(os.path.join(UPLOAD_FOLDER,img.filename))
+        exist_location = []
+        names = dishInit.find_dish_by_name(f.name.data) # 查找餐品名
+        for name in names:
+            exist_location.append(name.location)
+        if names and f.location.data in exist_location:
+            flash("菜品已存在，请查询")
             return render_template("MangerDish/add.html", form=f)
         else:
-            print(f.validate())
             toListAllergens = f.allergens.data.split() # 将str:allergens --> list:allergens
             dishInit.add_dish(location=f.location.data, name=f.name.data,
-            price=f.price.data, category=f.category.data, image_url=f.img_url.data, allergens=toListAllergens,
-            description="", calories=f.calories.data)
+            price=f.price.data, category=f.category.data, image_url=request.files['img_url'].filename, allergens=toListAllergens,
+            description=f.description.data, calories=f.calories.data)
             return redirect('dish_list')
     return render_template('MangerDish/add.html', form=f)
 
@@ -63,16 +77,16 @@ def dish_edit(dish_id):
         return render_template('MangerDish/edit.html', form=f)
     elif request.method == 'POST':
         f = DishForm(request.form)
-        dish_obj = dishInit.find_dish_by_name(dish_id)[0]
-        dishInit.remove_dish(dish_obj) # 删除原有菜品对象
         if f.is_submitted(): # 检测是否获取了表单,不能通过validate验证？？？
-            dish_obj.name = f.name.data
-            dish_obj.category = f.category.data
-            dish_obj.image_url = f.img_url.data
-            dish_obj.calories = f.calories.data
-            dish_obj.price = f.price.data
-            dish_obj.location = f.location.data
-            dish_obj.allergens = f.allergens.data.split()
+            # toListAllergens = f.allergens.data.split()
+            img = request.files['img_url']
+            if img.filename != '':
+                img.save(os.path.join(UPLOAD_FOLDER,img.filename))
+
+            toListAllergens = f.allergens.data.split()
+            dishInit.update_dish(location=f.location.data, name=f.name.data, price=f.price.data,
+                                 category=f.calories.data, image_url=request.files['img_url'].filename, calories=f.calories.data,
+                                 allergens=toListAllergens, description=f.description.data)
             return redirect(url_for('dish.dish_list'))
         else:
             return render_template('MangerDish/edit.html', form=f) 
@@ -80,6 +94,6 @@ def dish_edit(dish_id):
 '''删除菜品'''
 @dish_bp.route('/dish_del', methods=['GET', 'POST'])
 def dish_del():
-    remove_dish = request.values.get("dish_id")
-    dishInit.remove_dish(remove_dish)
-    return jsonify({"code":"200", "message":"删除成功"})
+    remove_dish = eval(request.values.get("dish_id"))
+    dishInit.remove_dish(remove_dish[0], remove_dish[1])
+    return jsonify({'code':200})

@@ -22,10 +22,25 @@
         ]
     },
     {
-        "student_id": "123456",
-        "name": "Tom",
+        "student_id": "202400301052",
+        "name": "song",
         "password": "123456",
-        "profile": "I am Tom",
+        "profile": {
+            "age": 12,
+            "gender": "Male",
+            "description": "i"
+        },
+        "dining_info_list": []
+    },
+    {
+        "student_id": "202400301022",
+        "name": "s",
+        "password": "13213123",
+        "profile": {
+            "age": 13,
+            "gender": "Male",
+            "description": "23123"
+        },
         "dining_info_list": []
     }
 ]
