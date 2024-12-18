@@ -1,4 +1,4 @@
-from wtforms import StringField, TextAreaField, SelectField,FileField, FloatField,DateTimeField
+from wtforms import StringField, TextAreaField, SelectField,FileField,FloatField,DateTimeField,IntegerField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms.validators import Length, DataRequired
@@ -34,7 +34,7 @@ class DishForm(FlaskForm):
 
     description = TextAreaField(label="菜品详情",
                 validators=[DataRequired()],
-                render_kw={"class":"form-control", "placeholder":"菜品描述和上传图片", "rows":5, "cols":50})
+                render_kw={"class":"form-control", "placeholder":"请输入菜的描述", "rows":5, "cols":50})
 
 
 class StuForm(FlaskForm):
@@ -55,7 +55,7 @@ class StuForm(FlaskForm):
     validators=[DataRequired(message="密码不能为空")],
     render_kw={"class":"form-control", "placeholder":"请输入密码"})
 
-    age = StringField(label="学生年龄",
+    age = IntegerField(label="学生年龄",
     validators=[DataRequired(message="学生年龄不能为空")],
     render_kw={"class":"form-control", "placeholder":"请输入年龄"})
 

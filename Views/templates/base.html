@@ -6,12 +6,12 @@
     {% block title %}
     <title>SZTU食堂管理系统</title>
     {% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css') }}">
     <script src="{{ url_for('static',filename='plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static',filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='plugins/popper/popper.min.js') }}"></script>
     {% block ext_css %}
     {% endblock %}
 </head>
@@ -41,8 +41,8 @@
     </nav>
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <a href="{{ url_for('index') }}" class="brand-link">
-            <img src="{{ url_for('static',filename='img/AdminLTELogo.png' ) }}" alt="AdminLTE Logo"
-                 class="brand-image img-circle elevation-3" style="opacity: .8">
+            <img src="{{ url_for('static',filename='img/logo.png' ) }}" alt="AdminLTE Logo"
+                 class="brand-image img-square elevation-3" style="opacity: .8">
             <span class="brand-text font-weight-light">SZTU食堂管理系统</span>
         </a>
         <br>

@@ -9,7 +9,19 @@ stuInit = StudentController()
 '''学生列表'''
 @stu_bp.route('/stu_list', methods=['GET','POST'])
 def stu_list():
-   return render_template("MangerStu/index.html")
+    if request.method == 'GET':
+        studetns = stuInit.get_all_students()
+        return render_template('MangerStu/index.html', students=studetns)
+    elif request.method == 'POST':
+        find = request.form.get("IdorName")
+        if find:
+            students = stuInit.find_student_by_id(find)
+            if  not students:
+                students = stuInit.find_student_by_name(find)
+        else:
+            students = stuInit.get_all_students()
+        return render_template("MangerStu/index.html", students=students)   
+        
 
 '''新增学生'''
 @stu_bp.route('/stu_add', methods=['GET', 'POST'])
@@ -18,8 +30,11 @@ def stu_add():
     if f.validate_on_submit():
         stu_id = stuInit.find_student_by_id(f.student_id.data)
         if stu_id:
-            flash("学号重复，请查询")
+            flash("学号重复，请查询") 
             return render_template("MangerStu/add.html", form=f)
+        elif f.gender.data == "-1":
+            flash("性别不能为空")
+            return render_template("MangerStu/add_html", form=f)
         else:
             stuInit.add_student(location=f.student_id.data, name=f.name.data,
             student_id=f.student_id.data, password=f.password.data,profile=int(f.age.data),
@@ -28,9 +43,20 @@ def stu_add():
     return render_template('MangerStu/add.html', form=f)
 
 
-@stu_bp.route("/stu_edit", methods=['GET', 'POST'])
-def stu_edit():
-    pass
+@stu_bp.route("/stu_edit/<stu_id>", methods=['GET', 'POST'])
+def stu_edit(stu_id):
+    if request.method == 'GET':
+        stu_obj = stuInit.find_student_by_id(stu_id)
+        f = StuForm()
+        f.student_id.data = stu_obj.student_id
+        f.name.data = stu_obj.name
+        f.password.data = stu_obj.password
+        f.age.data = stu_obj.profile.age
+        f.gender.data = stu_obj.profile.gender
+        f.description.data = stu_obj.profile.description
+        return render_template('MangerStu/edit.html', form=f)
+    elif request.method == 'POST':
+        pass
 
 '''删除学生信息'''
 @stu_bp.route('/stu_del', methods=['GET','POST'])

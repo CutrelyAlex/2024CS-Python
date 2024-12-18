@@ -61,19 +61,23 @@ def dish_add():
 '''修改菜品'''
 @dish_bp.route('/dish_edit/<dish_id>', methods=['GET', 'POST'])
 def dish_edit(dish_id):
+    dish_id = dish_id.strip("()").split(",")
+    dish_obj = dishInit.find_dish_by_location(eval(dish_id[1]), eval(dish_id[0]))[0] # 根据菜名获得菜品全部信息
     if request.method == 'GET':
-        dish_obj = dishInit.find_dish_by_name(dish_id)[0] # 根据菜名获得菜品全部信息
+        print(dish_obj)
         f = DishForm()
-        con_allergens = ""  # 将lsit:allergens --> str:allergens
-        for show in dish_obj.allergens:
-            con_allergens = con_allergens + " " + show 
-        f.name.data = dish_obj.name
+        str_allergen = "" # 将allergens列表形式转换成字符串输出
+        for allergen in dish_obj.allergens:
+            str_allergen += " " + allergen
+        str_allergen = str_allergen.strip()
+        # f.name.data = dish_obj.name
         f.category.data = dish_obj.category
         f.img_url.data = dish_obj.image_url
         f.calories.data = dish_obj.calories
         f.price.data = dish_obj.price
-        f.location.data = dish_obj.location
-        f.allergens.data = con_allergens
+        # f.location.data = dish_obj.location
+        f.allergens.data = str_allergen
+        f.description.data = dish_obj.description
         return render_template('MangerDish/edit.html', form=f)
     elif request.method == 'POST':
         f = DishForm(request.form)
@@ -82,10 +86,9 @@ def dish_edit(dish_id):
             img = request.files['img_url']
             if img.filename != '':
                 img.save(os.path.join(UPLOAD_FOLDER,img.filename))
-
             toListAllergens = f.allergens.data.split()
-            dishInit.update_dish(location=f.location.data, name=f.name.data, price=f.price.data,
-                                 category=f.calories.data, image_url=request.files['img_url'].filename, calories=f.calories.data,
+            dishInit.update_dish(location=eval(dish_id[1]),name=eval(dish_id[0]), price=f.price.data,
+                                 category=f.category.data, image_url=request.files['img_url'].filename, calories=f.calories.data,
                                  allergens=toListAllergens, description=f.description.data)
             return redirect(url_for('dish.dish_list'))
         else:

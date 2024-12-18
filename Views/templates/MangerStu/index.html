@@ -8,7 +8,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <h1 class="m-0">
-                                商品信息模块
+                                学生信息模块
                                 <small>列表</small>
                             </h1>
                         </div>
@@ -21,27 +21,72 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 search-collapse">
-                        <form id="search_form">
-                            <div class="select-list">
-                                <ul>
-                                    <li>
-                                        <label>商品名称： </label>
-
-                                        <input type="text" id="student_id" name="student_id" value=""/>
-                                    </li>
-                                    <li>
-                                        <a class="btn btn-primary btn-edit" id="btn_search"><i class="fa fa-search"></i>搜索</a>
-                                        <a class="btn btn-success" href="{{ url_for('stu.stu_add') }}">
-                                            <i class="fa fa-plus"></i> 新增
-                                        </a>
-
-                                    </li>
-                                </ul>
+                        <form id="search_form" method="post">
+                            <div class="form-group row">
+                                <label for="inputtext" class="col-form-label">学生学号：</label>
+                                <div class="col-md-4">
+                                    <input type="text" id="search_name" name="IdorName" class="form-control" placeholder="请输入学生学号"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-plus"></i>查询</button>
+                                    <a class="btn btn-primary single" href="{{ url_for('stu.stu_add' ) }}">
+                                        <i class="fa fa-plus"></i> 新增
+                                    </a>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
+        <div class="col-sm-12 main">
+            <div class="panel panel-primary">
+              <div class="panel-body text-center">
+                <table class="table table-bordered table-condensed table-striped">
+                  <thead>
+                    <tr>
+                    <th scope="col">学生学号</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">密码</th>
+                    <th scope="col">年龄</th>
+                    <th scope="col">性别</th>
+                    <th scope="col">描述</th>
+                    <th scope="col">功能操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for stu in students %}
+                        <tr>
+                            <td>{{ stu.student_id }}</td>
+                            <td>{{ stu.name }}</td>
+                            <td>{{ stu.password }}</td>
+                            <td>{{ stu.profile.age }}</td>
+                            {% if stu.profile.gender == "Male" %}
+                                <td>男</td>
+                            {% else %}
+                                <td>女</td>
+                            {% endif %}
+                            <td>{{ stu.profile.description }}</td>
+                            <td width="20%">
+                                <a class="btn btn-primary single" href="{{ url_for('stu.stu_edit' , stu_id = stu.student_id) }}">
+                                    <i class="fa fa-edit"></i> 修改
+                                </a>
+                                <a class="btn btn-primary single" href="#">
+                                    <svg t="1734422225733" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4312" width="16" height="16"><path d="M419.037 287.953h413.124c17.673 0 32-14.327 32-32s-14.327-32-32-32H419.037c-17.673 0-32 14.327-32 32s14.327 32 32 32zM419.028 543.17h411.608c17.673 0 32-14.327 32-32s-14.327-32-32-32H419.028c-17.673 0-32 14.327-32 32s14.327 32 32 32zM832.161 735.802H419.037c-17.673 0-32 14.327-32 32s14.327 32 32 32h413.124c17.673 0 32-14.327 32-32s-14.327-32-32-32z" fill="#ffffff" p-id="4313"></path><path d="M256.037 255.953m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#ffffff" p-id="4314"></path><path d="M256.037 510.787m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#ffffff" p-id="4315"></path><path d="M256.037 767.621m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#ffffff" p-id="4316"></path></svg> 详情
+                                </a>
+                                <a class="btn btn-danger" href="javascript:void(0)" onclick="showDeleteModal(this)">删除</a>
+                                <input type="hidden" id="id_hidden" value="{{ stu.student_id }}">
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7">无相关记录!</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div> 
     </div>
 {% endblock %}

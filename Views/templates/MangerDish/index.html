@@ -57,6 +57,7 @@
                     <tr>
                         <th>位置</th>
                         <th>菜名</th>
+                        <th>种类</th>
                         <th>价格</th>
                         <th>热量</th>
                         <th>材料</th>
@@ -70,13 +71,14 @@
                         <tr>
                             <td>{{ dish.location }}</td>
                             <td>{{ dish.name }}</td>
+                            <td>{{ dish.category }}</td>
                             <td>{{ dish.price }}</td>
                             <td>{{ dish.calories }}</td>
                             <td>{% for main in dish.allergens %}{{main}} {% endfor %}</td>
                             <td><img src="{{ url_for('static', filename='img/') }}{{ dish.image_url }}" width="50px" height="50px"></td>
                             <td>{{ dish.description }}</td>
                             <td width="20%">
-                                <a class="btn btn-primary single" href="{{ url_for('dish.dish_edit', dish_id = dish.name ) }}">
+                                <a class="btn btn-primary single" href="{{ url_for('dish.dish_edit', dish_id = (dish.name,dish.location)) }}">
                                     <i class="fa fa-edit"></i> 修改
                                 </a>
                                 <a class="btn btn-danger" href="javascript:void(0)" onclick="showDeleteModal(this)">删除</a>
