@@ -9,7 +9,7 @@
 
 
 from typing import List
-from Core.Studentevaluation import Evaluation
+from Core.StudentEvaluation import Evaluation
 
 
 class EvaluationInterface:
