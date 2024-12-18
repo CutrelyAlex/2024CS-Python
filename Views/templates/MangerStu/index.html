@@ -1,0 +1,47 @@
+
+{% extends "base.html" %}
+{% block content %}
+    <div class="content-wrapper">
+        <div class="content-header">
+            <div class="container-fluid">
+                <div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">
+                                商品信息模块
+                                <small>列表</small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--内容开始-->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 search-collapse">
+                        <form id="search_form">
+                            <div class="select-list">
+                                <ul>
+                                    <li>
+                                        <label>商品名称： </label>
+
+                                        <input type="text" id="student_id" name="student_id" value=""/>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-primary btn-edit" id="btn_search"><i class="fa fa-search"></i>搜索</a>
+                                        <a class="btn btn-success" href="{{ url_for('stu.stu_add') }}">
+                                            <i class="fa fa-plus"></i> 新增
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

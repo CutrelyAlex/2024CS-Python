@@ -1,11 +1,10 @@
 import datetime
 from Core.DishController import DishController
 from Core.StudentController import StudentController, DiningInfo
-from Core.StudentEvaluation import *
+from Core.Studentevaluation import *
 
-loaded_evaluations = load_evaluations_from_json('evaluations.json')
-
-print(loaded_evaluations)
+stuController = StudentController()
+stuController.add_student("song", "202400301052", "123456", {"age":12, "gender":"Male", "description":"i"}, [])
 
 
 

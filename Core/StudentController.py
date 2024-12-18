@@ -18,6 +18,7 @@ import re
 from typing import List
 from Core.StudentModel import Student, convert_to_students, load_students_from_json, save_students_to_json, DiningInfo
 from Core.DishModel import Dish
+from Core.StudentModel import PersonalProfile
 
 student_path = "students.json"
 
@@ -38,16 +39,18 @@ class StudentController:
     def __init__(self):
         self.students = convert_to_students(load_students_from_json(student_path))
     
-    def add_student(self, location: str, name: str, student_id: str, password: str, profile: str, dining_info_list: List[DiningInfo]):
+    def add_student(self, name: str, student_id: str, password: str, profile: dict, dining_info_list: List[DiningInfo]):
         """
         添加学生。
 
         参数:
-            location (str): 学生的地点
             name (str): 学生的姓名
             student_id (str): 学生的学号
             password (str): 学生的密码
-            profile (str): 学生的简介
+            profile (dict): 学生的简介，包含以下键值对:
+                - age (int): 年龄
+                - gender (str): 性别
+                - description (str): 个人介绍
             dining_info_list (List[DiningInfo]): 学生的餐饮记录列表
 
         返回:
@@ -56,7 +59,8 @@ class StudentController:
         for existing_student in self.students:
             if existing_student.student_id == student_id:
                 return None
-        new_student = Student(location, name, student_id, password, profile, dining_info_list)
+        new_profile = PersonalProfile(**profile)
+        new_student = Student(student_id, name, password, new_profile, dining_info_list)
         self.students.append(new_student)
         save_students_to_json(student_path, self.students)
     
@@ -78,7 +82,7 @@ class StudentController:
     
     def find_student_by_name(self, name: str) -> List[Student]:
         """
-        ���据姓名查找学生。
+        据姓名查找学生。
 
         参数:
             name (str): 学生的姓名
@@ -118,7 +122,14 @@ class StudentController:
 
         参数:
             student_id (str): 学生的学号
-            **kwargs: 需要更新的字段及其新值
+            **kwargs: 需要更新的字段及其新值，包括:
+                - name (str): 姓名
+                - password (str): 密码
+                - profile (dict): 个人简介，包含以下键值对:
+                    - age (int): 年龄
+                    - gender (str): 性别
+                    - description (str): 个人介绍
+                - dining_info_list (List[DiningInfo]): 餐饮记录列表
 
         返回:
             None 如果学生未找到
@@ -130,7 +141,10 @@ class StudentController:
                 if 'password' in kwargs:
                     student.password = kwargs['password']
                 if 'profile' in kwargs:
-                    student.profile = kwargs['profile']
+                    profile_data = kwargs['profile']
+                    student.profile.age = profile_data.get('age', student.profile.age)
+                    student.profile.gender = profile_data.get('gender', student.profile.gender)
+                    student.profile.description = profile_data.get('description', student.profile.description)
                 if 'dining_info_list' in kwargs:
                     student.dining_info_list = kwargs['dining_info_list']
                 save_students_to_json(student_path, self.students)
