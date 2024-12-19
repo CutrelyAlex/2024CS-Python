@@ -71,9 +71,7 @@ def stu_edit(stu_id):
                 name=f.name.data, password=f.password.data, 
                 profile={"age":f.age.data, "gender":f.gender.data, "description":f.description.data})
             except AttributeError:
-                stuInit.update_student(student_id=stu_obj.student_id,
-                name=f.name.data, password=f.password.data, 
-                profile={'age':f.age.data, 'gender':f.gender.data, 'description':f.description.data})
+                return "还在开发中......."
             return redirect(url_for('stu.stu_list'))
         else:
             return render_template('MangerStu/edit.html', form=f, s_id=stu_obj.student_id)
