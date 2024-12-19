@@ -151,7 +151,7 @@ def save_students_to_json(file_path: str, students: List[Student]) -> None:
                     'dishes': dining_info.dishes,
                     'remarks': dining_info.remarks,
                     'location': dining_info.location,
-                    'images': dining_info.images  # 添加此行
+                    'images': dining_info.images if dining_info.images is not None else []
                 } for dining_info in student_data['dining_info_list']
             ]
         with open(file_path, 'w', encoding='utf-8') as file:
