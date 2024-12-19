@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, flash
+from flask import Blueprint, render_template, request, jsonify, redirect, flash, url_for
 from forms import StuForm
-from Core.StudentController import StudentController
+from Core.StudentController import StudentController, DiningInfo
 
 stu_bp = Blueprint('stu', __name__, url_prefix='/stu')
 
@@ -15,8 +15,8 @@ def stu_list():
     elif request.method == 'POST':
         find = request.form.get("IdorName")
         if find:
-            students = stuInit.find_student_by_id(find)
-            if  not students:
+            students = [stuInit.find_student_by_id(find)]
+            if students == [None]:
                 students = stuInit.find_student_by_name(find)
         else:
             students = stuInit.get_all_students()
@@ -51,12 +51,32 @@ def stu_edit(stu_id):
         f.student_id.data = stu_obj.student_id
         f.name.data = stu_obj.name
         f.password.data = stu_obj.password
-        f.age.data = stu_obj.profile.age
-        f.gender.data = stu_obj.profile.gender
-        f.description.data = stu_obj.profile.description
-        return render_template('MangerStu/edit.html', form=f)
+        # print(f.age.data, stu_obj, stu_obj.profile.age)
+        try:
+            f.age.data = stu_obj.profile.age
+            f.gender.data = stu_obj.profile.gender
+            f.description.data = stu_obj.profile.description
+        except AttributeError:
+            f.age.data = stu_obj.profile['age']
+            f.gender.data = stu_obj.profile['gender']
+            f.description.data = stu_obj.profile['description']
+
+        return render_template('MangerStu/edit.html', form=f, s_id=stu_obj.student_id)
     elif request.method == 'POST':
-        pass
+        stu_obj = stuInit.find_student_by_id(stu_id)
+        f = StuForm(request.form)
+        if f.is_submitted():
+            try:
+                stuInit.update_student(student_id=stu_obj.student_id,
+                name=f.name.data, password=f.password.data, 
+                profile={"age":f.age.data, "gender":f.gender.data, "description":f.description.data})
+            except AttributeError:
+                stuInit.update_student(student_id=stu_obj.student_id,
+                name=f.name.data, password=f.password.data, 
+                profile={'age':f.age.data, 'gender':f.gender.data, 'description':f.description.data})
+            return redirect(url_for('stu.stu_list'))
+        else:
+            return render_template('MangerStu/edit.html', form=f, s_id=stu_obj.student_id)
 
 '''删除学生信息'''
 @stu_bp.route('/stu_del', methods=['GET','POST'])

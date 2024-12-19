@@ -2,10 +2,10 @@
     {
         "student_id": "202400301051",
         "name": "陈烨烨",
-        "password": "password123",
+        "password": "password12334",
         "profile": {
             "age": 19,
-            "gender": "Male",
+            "gender": "男",
             "description": "我是一个学生."
         },
         "dining_info_list": [
@@ -27,8 +27,8 @@
         "password": "123456",
         "profile": {
             "age": 12,
-            "gender": "Male",
-            "description": "i"
+            "gender": "男",
+            "description": "111sd"
         },
         "dining_info_list": []
     },

@@ -1,7 +1,7 @@
+from Core.DishController import DishController
 from flask import Blueprint, render_template, request, jsonify,redirect, flash, url_for
 from forms import DishForm
 import os
-from Core.DishController import DishController
 
 '''
     建立菜品蓝图
@@ -14,7 +14,7 @@ from Core.DishController import DishController
 
 dish_bp = Blueprint("dish", __name__, url_prefix='/dish') # 建立菜品蓝图 url: /dish/
 dishInit = DishController() # 初始化菜品对象
-UPLOAD_FOLDER = 'Views\\static\\img'
+UPLOAD_FOLDER = 'static\\img'
 
 @dish_bp.route('/dish_list', methods=['GET','POST'])
 def dish_list():
@@ -64,7 +64,7 @@ def dish_edit(dish_id):
     dish_id = dish_id.strip("()").split(",")
     dish_obj = dishInit.find_dish_by_location(eval(dish_id[1]), eval(dish_id[0]))[0] # 根据菜名获得菜品全部信息
     if request.method == 'GET':
-        print(dish_obj)
+        # print(dish_obj)
         f = DishForm()
         str_allergen = "" # 将allergens列表形式转换成字符串输出
         for allergen in dish_obj.allergens:

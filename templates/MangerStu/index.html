@@ -61,7 +61,7 @@
                             <td>{{ stu.name }}</td>
                             <td>{{ stu.password }}</td>
                             <td>{{ stu.profile.age }}</td>
-                            {% if stu.profile.gender == "Male" %}
+                            {% if stu.profile.gender in ['Male', '男'] %}
                                 <td>男</td>
                             {% else %}
                                 <td>女</td>
