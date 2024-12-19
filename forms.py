@@ -1,6 +1,7 @@
-from wtforms import StringField, TextAreaField, SelectField,FileField,FloatField,DateTimeField,IntegerField
+from wtforms import StringField, TextAreaField, SelectField,FileField,FloatField,DateTimeField,IntegerField,MultipleFileField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
+from datetime import datetime
 from wtforms.validators import Length, DataRequired
 
 class DishForm(FlaskForm):
@@ -67,4 +68,20 @@ class StuForm(FlaskForm):
     validators=[DataRequired(message="材料不能为空")],
     render_kw={"class":"form-control", "rows":5, "cols":50})
 
+    datetime = DateTimeField(label="就餐时间",
+    format='%Y-%m-%d %H:%M:%S',
+    default=datetime.now(),
+    validators=[DataRequired(message="时间不能为空")],
+    render_kw={"class":"form-control", "placeholder":"请输入就餐时间"})
+    
+    dishes = StringField(label="菜品（多个菜品用逗号隔开）",
+    validators=[DataRequired(message="菜品不能为空")],
+    render_kw={"class":"form-control", "placeholder":"请输入菜品"})
+
+    remarks = TextAreaField(label="备注",
+    render_kw={"class":"form-control", "rows":5, "cols":50})
+
+    location = SelectField(label="位置",
+    choices=[("北区","北区"),("南区","南区")],
+    render_kw={"class":"form-control"})
     

@@ -16,6 +16,7 @@ dish_bp = Blueprint("dish", __name__, url_prefix='/dish') # 建立菜品蓝图 u
 dishInit = DishController() # 初始化菜品对象
 UPLOAD_FOLDER = 'static\\img'
 
+'''菜品列表'''
 @dish_bp.route('/dish_list', methods=['GET','POST'])
 def dish_list():
     if request.method == 'GET':

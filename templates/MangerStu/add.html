@@ -40,7 +40,7 @@
                     <div class="col-md-12">
                         <div class="card card-info">
                             <div class="card-header">
-                                <h3 class="card-title">菜品信息增加</h3>
+                                <h3 class="card-title">学生信息增加</h3>
                             </div>
                             <form class="form-horizontal" method="post" novalidate>
                                 <!-- {{ form.csrf_token }} -->
@@ -92,6 +92,33 @@
                                             <span style="color: red">{{ form.description.errors[0] }}</span>
                                         </div>
                                     </div> 
+                                    <div class="form-group row">
+                                        <label for="{{ form.datetime.id_for_label }}" class="col-sm-2 col-form-label">{{ form.datetime.label }}</label>
+                                        <div class="col-sm-10">
+                                            {{ form.datetime }}
+                                            <span style="color: red">{{ form.datetime.errors[0] }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="{{ form.remarks.id_for_label }}" class="col-sm-2 col-form-label">{{ form.remarks.label }}</label>
+                                        <div class="col-sm-10">
+                                            {{ form.remarks }}
+                                            <span style="color: red">{{ form.remarks.errors[0] }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="{{ form.location.id_for_label }}" class="col-sm-2 col-form-label">{{ form.location.label }}</label>
+                                        <div class="col-sm-10">
+                                            {{ form.location }}
+                                            <span style="color: red">{{ form.location.errors[0] }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">图片</label>
+                                        <div class="col-sm-10">
+                                            <div id="dropzone" class="dropzone"></div>
+                                        </div>
+                                    </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-info">保存</button>
                                         <button type="button" class="btn btn-default"><a href="{{ url_for('stu.stu_list' ) }}">返回</a>
@@ -100,6 +127,48 @@
                                     </div>
                                 </div>
                             </form>
+                            <script src="{{ url_for('static', filename='plugins/dropzone/min/dropzone.min.js') }}"></script>
+                            <script>
+                                var myDropzone = new Dropzone("#dropzone", {
+                                    url: "{{ url_for('stu.upload_file') }}",
+                                    addRemoveLinks: true,
+                                    dictDefaultMessage: "拖动文件到这里或者点击上传",
+                                    dictRemoveFile: "移除文件",
+                                    dictCancelUpload: "取消上传",
+                                    dictCancelUploadConfirmation: "确定取消上传吗？",
+                                    dictMaxFilesExceeded: "最多只能上传5个文件",
+                                    maxFiles: 5,
+                                    maxFilesize: 2,
+                                    acceptedFiles: ".jpg,.png,.gif,.jpeg",
+                                    init: function () {
+                                        this.on("success", function (file, response) {
+                                            console.log(response);
+                                            file.filename = response.filename;  // 保存文件名以便删除时使用
+                                        });
+                                        this.on("error", function (file, response) {
+                                            console.log(response);
+                                        });
+                                        this.on("removedfile", function (file) {
+                                            if (file.filename) {
+                                                fetch("{{ url_for('stu.delete_file') }}", {
+                                                    method: "POST",
+                                                    headers: {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    body: JSON.stringify({ filename: file.filename })
+                                                })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    console.log(data);
+                                                })
+                                                .catch(error => {
+                                                    console.error("Error:", error);
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>

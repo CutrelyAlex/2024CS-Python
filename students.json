@@ -1,46 +1,23 @@
 [
     {
-        "student_id": "202400301051",
-        "name": "陈烨烨",
-        "password": "password12334",
+        "student_id": "202400301052",
+        "name": "宋海同",
+        "password": "password123",
         "profile": {
-            "age": 19,
+            "age": 18,
             "gender": "男",
-            "description": "我是一个学生.是"
+            "description": "我是一个学生，在深圳技术大学。\r\n今年18岁。"
+        },
+        "dining_info_list": []
+    },
+    {
+        "student_id": "1",
+        "name": "1",
+        "password": "1",
+        "profile": {
+            "age": 1,
+            "gender": "男",
+            "description": "1"
         },
         "dining_info_list": [
-            {
-                "dining_time": "2023-10-01T12:30:00",
-                "dishes": [
-                    "炒饭",
-                    "测试菜"
-                ],
-                "remarks": "我累个",
-                "location": "Unknown",
-                "images": []
-            }
-        ]
-    },
-    {
-        "student_id": "202400301052",
-        "name": "song",
-        "password": "123456",
-        "profile": {
-            "age": 12,
-            "gender": "男",
-            "description": "111sd"
-        },
-        "dining_info_list": []
-    },
-    {
-        "student_id": "202400301022",
-        "name": "s",
-        "password": "13213123",
-        "profile": {
-            "age": 13,
-            "gender": "Male",
-            "description": "23123"
-        },
-        "dining_info_list": []
-    }
-]
+            

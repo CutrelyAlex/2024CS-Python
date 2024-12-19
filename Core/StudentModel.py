@@ -51,7 +51,7 @@ class Student:
         self.student_id = student_id
         self.name = name
         self.password = password
-        self.profile = profile
+        self.profile = profile(**profile) if isinstance(profile, dict) else profile
         self.dining_info_list = dining_info_list
 
     def validate(self):
@@ -152,7 +152,8 @@ def save_students_to_json(file_path: str, students: List[Student]) -> None:
                     'remarks': dining_info.remarks,
                     'location': dining_info.location,
                     'images': dining_info.images if dining_info.images is not None else []
-                } for dining_info in student_data['dining_info_list']
+                } if isinstance(dining_info, DiningInfo) else dining_info
+                 for dining_info in student_data['dining_info_list']
             ]
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(students_data, file, ensure_ascii=False, indent=4)  # 保存为 JSON 格式

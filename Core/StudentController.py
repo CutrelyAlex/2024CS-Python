@@ -23,12 +23,13 @@ from Core.StudentModel import PersonalProfile
 student_path = "students.json"
 
 class DiningInfo:
-    def __init__(self, dining_time: str, dishes: List[Dish], remarks: str, id: str = None, location: str = "Unknown"):
+    def __init__(self, dining_time: str, dishes: List[Dish], remarks: str, id: str = None, location: str = "Unknown", images: List[str]=None):
         self.id = id
         self.dining_time = dining_time
         self.dishes = dishes
         self.remarks = remarks
         self.location = location
+        self.images = images if images is not None else []
 
 class StudentController:
     """
@@ -142,6 +143,8 @@ class StudentController:
                     student.password = kwargs['password']
                 if 'profile' in kwargs:
                     profile_data = kwargs['profile']
+                    if isinstance(student.profile, dict):
+                        student.profile = PersonalProfile(**profile_data)
                     student.profile.age = profile_data.get('age', student.profile.age)
                     student.profile.gender = profile_data.get('gender', student.profile.gender)
                     student.profile.description = profile_data.get('description', student.profile.description)
