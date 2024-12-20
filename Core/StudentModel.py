@@ -51,7 +51,7 @@ class Student:
         self.student_id = student_id
         self.name = name
         self.password = password
-        self.profile = profile(**profile) if isinstance(profile, dict) else profile
+        self.profile = profile
         self.dining_info_list = dining_info_list
 
     def validate(self):
@@ -141,20 +141,20 @@ def save_students_to_json(file_path: str, students: List[Student]) -> None:
     无返回
     """
     try:
-        students_data = [student.__dict__ for student in students]  # 将学生对象转换为字典
-        for student_data in students_data:
-            if hasattr(student_data['profile'], '__dict__'):
-                student_data['profile'] = student_data['profile'].__dict__
-            student_data['dining_info_list'] = [
+        students_data = []
+        for student in students:
+            student_dict = student.__dict__.copy()
+            student_dict['profile'] = student.profile.__dict__
+            student_dict['dining_info_list'] = [
                 {
                     'dining_time': dining_info.dining_time.isoformat(),
                     'dishes': dining_info.dishes,
                     'remarks': dining_info.remarks,
                     'location': dining_info.location,
                     'images': dining_info.images if dining_info.images is not None else []
-                } if isinstance(dining_info, DiningInfo) else dining_info
-                 for dining_info in student_data['dining_info_list']
+                } for dining_info in student.dining_info_list
             ]
+            students_data.append(student_dict)
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(students_data, file, ensure_ascii=False, indent=4)  # 保存为 JSON 格式
     except (IOError, TypeError) as e:
