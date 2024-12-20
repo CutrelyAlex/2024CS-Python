@@ -2,8 +2,8 @@ from flask import Blueprint, render_template, request, jsonify, redirect, flash,
 from Core.StudentController import StudentController,DiningInfo
 
 dining_bp = Blueprint('dining', __name__ ,url_prefix='/dining')
-# diningInit = StudentController()
 
+'''就餐记录'''
 @dining_bp.route('/dining_list', methods=['GET','POST'])
 def dining_list():
     get_stus = StudentController().get_all_students()

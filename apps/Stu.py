@@ -93,8 +93,10 @@ def stu_add():
             flash("性别不能为空")
             return render_template("MangerStu/add_html", form=f)
         else:
-            dining_record = DiningInfo(dining_time=f.datetime.data, dishes=f.dishes.data,
-            remarks=f.remarks.data, images=SAVE_FOLDER_List)
+            dishes = f.dishes.data
+            dishes = dishes.split(',')
+            dining_record = DiningInfo(dining_time=f.datetime.data, dishes=dishes,
+            remarks=f.remarks.data, images=SAVE_FOLDER_List, location=f.location.data)
             stuInit.add_student(name=f.name.data,
             student_id=f.student_id.data, password=f.password.data,
             profile={"age":f.age.data,"gender":f.gender.data,"description":f.description.data},
@@ -102,6 +104,23 @@ def stu_add():
             stuInit.add_dining_record(student_id=f.student_id.data, dining_info=dining_record)
             return redirect('stu_list')
     return render_template('MangerStu/add.html', form=f)
+
+@stu_bp.route('/stu_dining_add', methods=['GET', 'POST'])
+def stu_dining_add():
+    f = StuForm()
+    if f.is_submitted():
+        stu_id = stuInit.find_student_by_id(f.student_id.data)
+        if not stu_id:
+            flash("学号不存在，请再次输入")
+            return render_template("MangerStu/dining_add.html", form=f)
+        else:
+            dishes = f.dishes.data
+            dishes = dishes.split(',')
+            dining_record = DiningInfo(dining_time=f.datetime.data, dishes=dishes,
+            remarks=f.remarks.data, images=SAVE_FOLDER_List, location=f.location.data)
+            stuInit.add_dining_record(student_id=f.student_id.data, dining_info=dining_record)
+            return redirect('stu_list')
+    return render_template('MangerStu/dining_add.html', form=f)
 
 '''修改学生信息'''
 @stu_bp.route("/stu_edit/<stu_id>", methods=['GET', 'POST'])

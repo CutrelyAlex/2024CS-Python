@@ -1,46 +1,71 @@
 [
     {
-        "student_id": "202400301052",
-        "name": "宋海同",
-        "password": "password123",
+        "student_id": "202200301052",
+        "name": "song",
+        "password": "123",
         "profile": {
-            "age": 18,
+            "age": 19,
             "gender": "男",
-            "description": "我是一个学生，在深圳技术大学。"
+            "description": "wu"
         },
         "dining_info_list": [
             {
-                "dining_time": "2024-12-20T09:22:14.363822",
+                "dining_time": "2024-12-20T21:11:40",
                 "dishes": [
-                    "1",
-                    "2"
+                    "牛肉"
                 ],
-                "remarks": "s",
-                "location": "Unknown",
+                "remarks": "无",
+                "location": "北区",
                 "images": [
-                    "s"
+                    "static\\img\\22.png"
                 ]
             }
         ]
     },
     {
-        "student_id": "202400301053",
-        "name": "肖中凯",
-        "password": "pass",
+        "student_id": "202400301052",
+        "name": "宋",
+        "password": "123",
         "profile": {
-            "age": 19,
+            "age": 18,
             "gender": "男",
             "description": "无"
         },
         "dining_info_list": [
             {
-                "dining_time": "2024-12-20T09:36:45",
-                "dishes": "抄手",
+                "dining_time": "2024-12-20T07:00:00",
+                "dishes": [
+                    "牛肉"
+                ],
                 "remarks": "无",
-                "location": "Unknown",
+                "location": "北区",
                 "images": [
-                    "static\\img\\2.png",
-                    "static\\img\\1.png"
+                    "static\\img\\bg.png",
+                    "static\\img\\22.png"
+                ]
+            }
+        ]
+    },
+    {
+        "student_id": "202400301011",
+        "name": "海",
+        "password": "123",
+        "profile": {
+            "age": 18,
+            "gender": "女",
+            "description": "无"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-20T07:22:00",
+                "dishes": [
+                    "面条"
+                ],
+                "remarks": "无",
+                "location": "北区",
+                "images": [
+                    "static\\img\\bg.png",
+                    "static\\img\\22.png"
                 ]
             }
         ]
