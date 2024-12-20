@@ -98,8 +98,8 @@ def stu_add():
             stuInit.add_student(name=f.name.data,
             student_id=f.student_id.data, password=f.password.data,
             profile={"age":f.age.data,"gender":f.gender.data,"description":f.description.data},
-            dining_info_list=[dining_record])
-            # stuInit.add_dining_record(student_id=f.student_id.data, dining_info=dining_record)
+            dining_info_list=[])
+            stuInit.add_dining_record(student_id=f.student_id.data, dining_info=dining_record)
             return redirect('stu_list')
     return render_template('MangerStu/add.html', form=f)
 

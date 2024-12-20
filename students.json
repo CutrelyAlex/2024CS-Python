@@ -8,6 +8,41 @@
             "gender": "男",
             "description": "我是一个学生，在深圳技术大学。"
         },
-        "dining_info_list": []
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-20T09:22:14.363822",
+                "dishes": [
+                    "1",
+                    "2"
+                ],
+                "remarks": "s",
+                "location": "Unknown",
+                "images": [
+                    "s"
+                ]
+            }
+        ]
+    },
+    {
+        "student_id": "202400301053",
+        "name": "肖中凯",
+        "password": "pass",
+        "profile": {
+            "age": 19,
+            "gender": "男",
+            "description": "无"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-20T09:36:45",
+                "dishes": "抄手",
+                "remarks": "无",
+                "location": "Unknown",
+                "images": [
+                    "static\\img\\2.png",
+                    "static\\img\\1.png"
+                ]
+            }
+        ]
     }
 ]
