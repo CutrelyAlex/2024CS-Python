@@ -1,10 +1,11 @@
 from flask import Flask, render_template
-from apps import Dish, Stu
+from apps import Dish, Stu, Dining_info
 
 app = Flask(__name__) # 项目名称
 app.secret_key = "dasswdadsd13213" # 免除csrf保护
 app.register_blueprint(Dish.dish_bp) # 加载菜品蓝图
 app.register_blueprint(Stu.stu_bp)   # 加载学生蓝图
+app.register_blueprint(Dining_info.dining_bp) # 加载就餐记录蓝图
 
 '''首页'''
 @app.route('/')
