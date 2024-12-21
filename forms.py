@@ -26,7 +26,7 @@ class DishForm(FlaskForm):
             render_kw={"class":"form-control", "placeholder":"请输入价格"})
 
     location = SelectField(label="菜的位置",
-    choices=[('北区',"北区"), ('南区','南区')], 
+    choices=[("北区","北区"),("南区","南区"),("堕落街","堕落街"),("其他","其他")], 
     render_kw={"class":"form-control custom-select", "placeholder":"请选择位置"})
     
     allergens = TextAreaField(label="菜的原材料", validators=[
