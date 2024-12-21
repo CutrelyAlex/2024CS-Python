@@ -10,5 +10,17 @@
             "面"
         ],
         "description": "11"
+    },
+    {
+        "location": "南区",
+        "name": "米饭",
+        "price": 10.6,
+        "category": "主菜",
+        "image_url": "brick.png",
+        "calories": 380.0,
+        "allergens": [
+            "大米"
+        ],
+        "description": "无"
     }
 ]
