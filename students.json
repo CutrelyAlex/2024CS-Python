@@ -69,5 +69,28 @@
                 ]
             }
         ]
+    },
+    {
+        "student_id": "202100301052",
+        "name": "小明",
+        "password": "123444",
+        "profile": {
+            "age": 18,
+            "gender": "男",
+            "description": "我是一个学生"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-21T13:07:41",
+                "dishes": [
+                    "面条"
+                ],
+                "remarks": "无",
+                "location": "堕落街",
+                "images": [
+                    "static\\img\\22.png"
+                ]
+            }
+        ]
     }
 ]

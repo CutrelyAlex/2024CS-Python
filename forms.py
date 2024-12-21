@@ -82,6 +82,6 @@ class StuForm(FlaskForm):
     render_kw={"class":"form-control", "rows":5, "cols":50})
 
     location = SelectField(label="位置",
-    choices=[("北区","北区"),("南区","南区")],
+    choices=[("北区","北区"),("南区","南区"),("堕落街","堕落街"),("其他","其他")],
     render_kw={"class":"form-control"})
     
