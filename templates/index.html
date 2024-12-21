@@ -95,6 +95,32 @@
                 </div>
                 <!-- /.card -->
             </section>
+            <section class="col-lg-6 connectedSortable">
+
+              <!-- BAR CHART -->
+              <div class="card card-success">
+                  <div class="card-header">
+                      <h3 class="card-title">就餐位置次数</h3>
+
+                      <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                              <i class="fas fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-tool" data-card-widget="remove">
+                              <i class="fas fa-times"></i>
+                          </button>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <div class="chart">
+                          <canvas id="polarAreaChart"
+                                  style="min-height: 250px; height: 250px; max-height: 500px; max-width: 100%;"></canvas>
+                      </div>
+                  </div>
+                  <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+          </section>
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -122,6 +148,36 @@
                 },
             ]
         }
+        var charData_3 = {
+            labels: {{ location_labels|safe }},
+            datasets: [
+                {
+                    label: '就餐位置',
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                    data: {{ location_num }},
+                },
+            ]
+        }
+
+        var maxDataValue1 = Math.max.apply(null, {{ time_num }});
+        var polarAreaChartCanvas = $('#polarAreaChart').get(0).getContext('2d')
+        var polarAreaData = charData_3
+        var polarAreaOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    max: maxDataValue1 + 2
+                },
+                reverse: false
+            }
+        }
+        var polarAreaChart = new Chart(polarAreaChartCanvas, {
+            type: 'polarArea',
+            data: polarAreaData,
+            options: polarAreaOptions
+        })
 
         var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
         var pieData = charData
@@ -135,6 +191,8 @@
             data: pieData,
             options: pieOptions
         })
+        
+        var maxDataValue = Math.max.apply(null, {{ time_num }});
         var barChartCanvas = $('#barChart').get(0).getContext('2d')
         var barchartOptions = {
             responsive: true,
@@ -148,7 +206,7 @@
                     ticks: {
                         beginAtZero: true,
                         stepSize: 1,
-                        max: 5
+                        max: maxDataValue + 2
                     }
                 }]
             }

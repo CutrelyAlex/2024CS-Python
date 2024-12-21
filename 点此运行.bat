@@ -15,6 +15,8 @@ REM 激活虚拟环境
 echo 激活虚拟环境...
 call .venv\Scripts\activate.bat
 
+cls
+
 REM 检查 requirements.txt 文件是否存在
 if not exist requirements.txt (
     echo 未检测到 requirements.txt 文件，请确保文件存在并重试。
