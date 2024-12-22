@@ -25,7 +25,7 @@ def dish_list():
     if request.method == 'POST':
         name = request.form.get("name")
         location = request.form.get("location")
-        if name and location != '-1':
+        if name and location != '-1': # -1表示未选择
             dishes = dishInit.find_dish_by_location(location, name)
         elif name and location == '-1':
             dishes = dishInit.find_dish_by_name(name)

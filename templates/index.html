@@ -21,31 +21,135 @@
       <div class="container-fluid text-center">
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-lg-6 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{ len_stu }}</h3>
-
-                <p>学生人数</p>
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title">菜品大数据</h5>
+  
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <p class="text-center">
+                        <strong>最新更新:{{ format_now }}</strong>
+                      </p>
+                      <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                        <!-- Sales Chart Canvas -->
+                        <canvas id="bar_2Chart" height="225" style="height: 180px; display: block; width: 463px;" width="578" class="chartjs-render-monitor"></canvas>
+                      </div>
+                      <!-- /.chart-responsive -->
+                       <p class="text-center">
+                        <strong>菜品位置信息</strong>
+                        </p>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-4">
+                      <p class="text-center">
+                        <strong>菜品位置分布</strong>
+                      </p>
+  
+                      <div class="progress-group">
+                        西餐厅
+                        <span class="float-right"><b>{{ location_dishes_num[4] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-primary" style="width: {{ location_dishes_num[4]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+                      <!-- /.progress-group -->
+  
+                      <div class="progress-group">
+                        北区
+                        <span class="float-right"><b>{{ location_dishes_num[0] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-danger" style="width: {{ location_dishes_num[0]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+  
+                      <!-- /.progress-group -->
+                      <div class="progress-group">
+                        <span class="progress-text">南区</span>
+                        <span class="float-right"><b>{{ location_dishes_num[1] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-success" style="width: {{ location_dishes_num[1]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+  
+                      <!-- /.progress-group -->
+                      <div class="progress-group">
+                        南堕落街
+                        <span class="float-right"><b>{{ location_dishes_num[2] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-warning" style="width: {{ location_dishes_num[2]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+                      <!-- /.progress-group -->
+                      <div class="progress-group">
+                        北堕落街
+                        <span class="float-right"><b>{{ location_dishes_num[3] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-cyan" style="width: {{ location_dishes_num[3]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+                      <div class="progress-group">
+                        竹韵食堂
+                        <span class="float-right"><b>{{ location_dishes_num[5] }}</b></span>
+                        <div class="progress progress-sm">
+                          <div class="progress-bar bg-agenta" style="width: {{ location_dishes_num[5]/all_dishes*100 }}%"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- ./card-body -->
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-sm-3 col-6">
+                      <div class="description-block border-right">
+                        <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span> -->
+                        <h5 class="description-header">{{ all_dishes }}</h5>
+                        <span class="description-text">菜品数量</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 col-6">
+                      <div class="description-block border-right">
+                        <!-- <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span> -->
+                        <h5 class="description-header">{{ len_stu }}</h5>
+                        <span class="description-text">学生人数</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-sm-3 col-6">
+                      <div class="description-block border-right">
+                        <!-- <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span> -->
+                        <!-- <h5 class="description-header"></h5> -->
+                        <span class="description-text">未开发</span>
+                      </div>
+                      <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                </div>
+                <!-- /.card-footer -->
               </div>
-              <a href="{{ url_for('stu.stu_list' ) }}" class="small-box-footer">更多信息<i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.card -->
             </div>
+            <!-- /.col -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-6 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>{{ len_dish }}</h3>
-
-                <p>菜品数量</p>
-              </div>
-              <a href="{{ url_for('dish.dish_list' ) }}" class="small-box-footer">更多信息<i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
         <div class="row">
             <section class="col-lg-6 connectedSortable">
                 <!-- PIE CHART -->
@@ -159,6 +263,17 @@
             ]
         }
 
+        var charData_4 = {
+            labels: {{ location_dishes_labels|safe }},
+            datasets: [
+                {
+                    label: '菜品位置',
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                    data: {{ location_dishes_num }},
+                },
+            ]
+        }
+
         var maxDataValue1 = Math.max.apply(null, {{ time_num }});
         var polarAreaChartCanvas = $('#polarAreaChart').get(0).getContext('2d')
         var polarAreaData = charData_3
@@ -214,6 +329,30 @@
         var barChart = new Chart(barChartCanvas, {
             type: 'bar',
             data: charData_2,
+            options: barchartOptions
+        })
+
+        var barChartCanvas = $('#bar_2Chart').get(0).getContext('2d')
+        var barchartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            datasetFill: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
+                    
+                    }
+                }]
+            }
+        }
+        var barChart = new Chart(barChartCanvas, {
+            type: 'bar',
+            data: charData_4,
             options: barchartOptions
         })
 
