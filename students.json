@@ -1,79 +1,8 @@
 [
     {
-        "student_id": "202200301052",
-        "name": "song",
-        "password": "123",
-        "profile": {
-            "age": 19,
-            "gender": "男",
-            "description": "wu"
-        },
-        "dining_info_list": [
-            {
-                "dining_time": "2024-12-20T21:11:40",
-                "dishes": [
-                    "牛肉"
-                ],
-                "remarks": "无",
-                "location": "北区",
-                "images": [
-                    "static\\img\\22.png"
-                ]
-            }
-        ]
-    },
-    {
         "student_id": "202400301052",
-        "name": "宋",
-        "password": "123",
-        "profile": {
-            "age": 18,
-            "gender": "男",
-            "description": "无"
-        },
-        "dining_info_list": [
-            {
-                "dining_time": "2024-12-20T07:00:00",
-                "dishes": [
-                    "牛肉"
-                ],
-                "remarks": "无",
-                "location": "北区",
-                "images": [
-                    "static\\img\\bg.png",
-                    "static\\img\\22.png"
-                ]
-            }
-        ]
-    },
-    {
-        "student_id": "202400301011",
-        "name": "海",
-        "password": "123",
-        "profile": {
-            "age": 18,
-            "gender": "女",
-            "description": "无"
-        },
-        "dining_info_list": [
-            {
-                "dining_time": "2024-12-20T07:22:00",
-                "dishes": [
-                    "面条"
-                ],
-                "remarks": "无",
-                "location": "北区",
-                "images": [
-                    "static\\img\\bg.png",
-                    "static\\img\\22.png"
-                ]
-            }
-        ]
-    },
-    {
-        "student_id": "202100301052",
-        "name": "小明",
-        "password": "123444",
+        "name": "宋海同",
+        "password": "123445",
         "profile": {
             "age": 18,
             "gender": "男",
@@ -81,15 +10,13 @@
         },
         "dining_info_list": [
             {
-                "dining_time": "2024-12-21T13:07:41",
+                "dining_time": "2024-12-23T09:21:11",
                 "dishes": [
-                    "面条"
+                    "西红柿鸡蛋面"
                 ],
-                "remarks": "无",
-                "location": "堕落街",
-                "images": [
-                    "static\\img\\22.png"
-                ]
+                "remarks": "好吃",
+                "location": "南区",
+                "images": []
             }
         ]
     }
