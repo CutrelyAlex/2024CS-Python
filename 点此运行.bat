@@ -7,7 +7,7 @@ cls
 
 REM 检查虚拟环境是否存在，如果不存在则创建
 if not exist .venv\Scripts\activate.bat (
-    echo 创建虚拟环境...
+    @REM echo 创建虚拟环境...
     python -m venv .venv
 )
 
@@ -24,26 +24,8 @@ if not exist requirements.txt (
     exit /b
 )
 
-REM 检查 requirements.txt 文件是否为空
-for /f %%i in ('find /c /v "" ^< requirements.txt') do set lines=%%i
-if %lines%==0 (
-    echo requirements.txt 文件为空，请添加需要安装的第三方包并重试。
-    pause
-    exit /b
-)
-
-REM 检查是否已安装 requirements.txt 里的第三方库
-echo 检查是否已安装 requirements.txt 里的第三方库...
-pip check >nul 2>&1
-if %errorlevel% neq 0 (
-    echo 安装依赖...
-    pip install -r requirements.txt
-    if %errorlevel% neq 0 (
-        echo 安装依赖失败，请检查 requirements.txt 文件并重试。
-        pause
-        exit /b
-    )
-)
+echo 安装依赖...
+pip install -r requirements.txt
 
 REM 启动应用程序
 echo 启动应用程序...
