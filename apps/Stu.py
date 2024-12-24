@@ -32,6 +32,7 @@ def allowed_file(filename):
 def stu_list():
     if request.method == 'GET':
         studetns = stuInit.get_all_students()
+        # print(studetns)
         return render_template('MangerStu/index.html', students=studetns)
     elif request.method == 'POST':
         find = request.form.get("IdorName")

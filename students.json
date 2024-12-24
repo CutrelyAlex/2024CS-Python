@@ -19,5 +19,68 @@
                 "images": []
             }
         ]
+    },
+    {
+        "student_id": "202400301010",
+        "name": "潘东杰",
+        "password": "123456",
+        "profile": {
+            "age": 18,
+            "gender": "男",
+            "description": "还行"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-24T12:06:00",
+                "dishes": [
+                    "烧鸭饭"
+                ],
+                "remarks": "",
+                "location": "南区",
+                "images": []
+            }
+        ]
+    },
+    {
+        "student_id": "202400301011",
+        "name": "学生2",
+        "password": "123456",
+        "profile": {
+            "age": 18,
+            "gender": "男",
+            "description": "这个网站很好"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-24T12:06:00",
+                "dishes": [
+                    "叉烧饭"
+                ],
+                "remarks": "",
+                "location": "南区",
+                "images": []
+            }
+        ]
+    },
+    {
+        "student_id": "202400301012",
+        "name": "学生3",
+        "password": "123456",
+        "profile": {
+            "age": 18,
+            "gender": "男",
+            "description": "很贵"
+        },
+        "dining_info_list": [
+            {
+                "dining_time": "2024-12-24T12:06:00",
+                "dishes": [
+                    "黄焖鸡"
+                ],
+                "remarks": "",
+                "location": "北区",
+                "images": []
+            }
+        ]
     }
 ]
